@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/gridview_movies"
-        android:numColumns="3"
-        />
+        android:numColumns="auto_fit" />
 
 </FrameLayout>
