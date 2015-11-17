@@ -1,6 +1,7 @@
 package com.pgfmusic.popularmoviesapp;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -9,36 +10,31 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
+import javax.security.auth.login.LoginException;
+
 /**
  * Created by USUARIO on 14/11/2015.
  */
 public class ImageAdapter extends BaseAdapter {
 
     private Context mContext;
+    public ArrayList<Movie> movies;
 
-    // Create some dummy photos list
-
-    public String[] remotePhotos = {
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiguzbXcqtbFo-q8KigktHWg6mV8FIVISl-SkTSn8Ug4M073vJ",
-            "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRjwRlJmBpdXi0Z6OfhddAKKqyq8159UwBCZh9bjju1T5nu1c8L",
-            "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQJS9KVI97cU_2SzIl3fZrOUQB6NAmVMYNPV9LEycquvrFT3saxIQ",
-            "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTEipUEyCrKbd6W-_Re3BRu-wCf1XzUXaC1i9_OUDtHHBK5csz-",
-            "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRwlSmVoCXtfjEKEBFbsghGmXPernDWAblwc-Gxh56h78WVDt78",
-            "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTbTlRyRb8FHjsuFrFDk8Bs_TAFJxpnYXeQbWtHqi8Ir_zGtlCL7Q"
-    };
-
-    public ImageAdapter(Context c) {
+    public ImageAdapter(Context c, ArrayList<Movie> movies) {
         mContext = c;
+        this.movies = movies;
     }
 
     @Override
     public int getCount() {
-        return remotePhotos.length;
+        return movies.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return remotePhotos[position];
+        return movies.get(position);
     }
 
     @Override
@@ -49,9 +45,12 @@ public class ImageAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView = new ImageView(mContext);
-        // add placeholders and error image
+        // TODO add placeholders and error poster
+
+        Log.i(Utilities.TAG, movies.get(position).getPoster());
+
         Picasso.with(mContext)
-            .load(remotePhotos[position])
+            .load(movies.get(position).getPoster())
             .into(imageView);
         return imageView;
     }
