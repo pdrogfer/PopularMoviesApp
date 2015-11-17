@@ -45,6 +45,7 @@ public class ImageAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView = new ImageView(mContext);
+
         // TODO add placeholders and error poster
 
         Log.i(Utilities.TAG, movies.get(position).getPoster());
@@ -52,6 +53,7 @@ public class ImageAdapter extends BaseAdapter {
         Picasso.with(mContext)
             .load(movies.get(position).getPoster())
             .into(imageView);
+
         return imageView;
     }
 }

@@ -28,12 +28,6 @@ import java.util.concurrent.ExecutionException;
 public class FragmentMain extends android.support.v4.app.Fragment {
 
     GridView gridView;
-    String[] remotePhotosUrls = {"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiguzbXcqtbFo-q8KigktHWg6mV8FIVISl-SkTSn8Ug4M073vJ",
-            "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRjwRlJmBpdXi0Z6OfhddAKKqyq8159UwBCZh9bjju1T5nu1c8L",
-            "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQJS9KVI97cU_2SzIl3fZrOUQB6NAmVMYNPV9LEycquvrFT3saxIQ",
-            "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTEipUEyCrKbd6W-_Re3BRu-wCf1XzUXaC1i9_OUDtHHBK5csz-",
-            "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRwlSmVoCXtfjEKEBFbsghGmXPernDWAblwc-Gxh56h78WVDt78",
-            "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTbTlRyRb8FHjsuFrFDk8Bs_TAFJxpnYXeQbWtHqi8Ir_zGtlCL7Q"};
 
     public FragmentMain() {
     }
@@ -118,7 +112,7 @@ public class FragmentMain extends android.support.v4.app.Fragment {
         private ArrayList<Movie> getMoviesDataFromJson(String JsonStr) {
 
             final String TMDB_BASE_URL = "http://image.tmdb.org/t/p/";
-            final String POSTER_SIZE = "w185/";
+            final String POSTER_SIZE = "w500/";
             String tag_ID = "id";
             String tag_title = "title";
             String tag_posterPath = "poster_path";
