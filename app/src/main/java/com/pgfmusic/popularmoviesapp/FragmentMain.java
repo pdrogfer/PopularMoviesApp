@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import org.json.JSONArray;
@@ -25,7 +26,7 @@ import java.util.concurrent.ExecutionException;
 /**
  * Created by USUARIO on 14/11/2015.
  */
-public class FragmentMain extends android.support.v4.app.Fragment {
+public class FragmentMain extends android.support.v4.app.Fragment implements AdapterView.OnItemClickListener{
 
     GridView gridView;
 
@@ -50,10 +51,12 @@ public class FragmentMain extends android.support.v4.app.Fragment {
         }
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         gridView = (GridView) rootView.findViewById(R.id.gridview_movies);
+        gridView.setOnItemClickListener(this);
         // TODO: 17/11/2015 here pass the urls of the obtained photos to gridView
         gridView.setAdapter(new ImageAdapter(getActivity(), movies));
         return rootView;
     }
+
 
     public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
 
@@ -138,6 +141,12 @@ public class FragmentMain extends android.support.v4.app.Fragment {
             Log.i(Utilities.TAG, "Results: " + movies.toString());
             return movies;
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.i(Utilities.TAG, "Clicked item num. " + position);
+
     }
 
 

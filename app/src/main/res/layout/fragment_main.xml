@@ -12,6 +12,7 @@
         android:id="@+id/gridview_movies"
         android:numColumns="3"
         android:stretchMode="columnWidth"
-        android:gravity="center"  />
+        android:gravity="center"
+        android:clickable="true" />
 
 </FrameLayout>

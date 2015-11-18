@@ -1,18 +1,14 @@
 package com.pgfmusic.popularmoviesapp;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-
-import javax.security.auth.login.LoginException;
 
 /**
  * Created by USUARIO on 14/11/2015.
@@ -47,8 +43,6 @@ public class ImageAdapter extends BaseAdapter {
         ImageView imageView = new ImageView(mContext);
 
         // TODO add placeholders and error poster
-
-        Log.i(Utilities.TAG, movies.get(position).getPoster());
 
         Picasso.with(mContext)
             .load(movies.get(position).getPoster())
