@@ -10,9 +10,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-/**
- * Created by USUARIO on 14/11/2015.
- */
 public class ImageAdapter extends BaseAdapter {
 
     private Context mContext;
