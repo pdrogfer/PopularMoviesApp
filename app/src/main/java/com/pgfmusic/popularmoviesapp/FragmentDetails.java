@@ -9,9 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-/**
- * Created by USUARIO on 18/11/2015.
- */
 public class FragmentDetails extends Fragment {
 
     public FragmentDetails() {
@@ -24,13 +21,12 @@ public class FragmentDetails extends Fragment {
 
         Intent intent = getActivity().getIntent();
         if (intent != null) {
-            // TODO: 18/11/2015 recover the parameters passed, that is the details of the movie to display
 
             int id = intent.getIntExtra("id", 0);
             String original_title = intent.getStringExtra("original_title");
             String plot = intent.getStringExtra("plot");
             String poster_path = intent.getStringExtra("poster_path");
-            int rating = intent.getIntExtra("user_rating", 0);
+            int rating = intent.getIntExtra("user_rating", 0); // TODO: 18/11/2015 this doesn't work
             String release_date = intent.getStringExtra("release_date");
 
             Toast.makeText(getActivity(), id + " " + original_title + " " +

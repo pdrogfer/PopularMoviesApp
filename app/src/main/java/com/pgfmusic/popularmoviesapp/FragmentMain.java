@@ -53,7 +53,6 @@ public class FragmentMain extends android.support.v4.app.Fragment implements Ada
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         gridView = (GridView) rootView.findViewById(R.id.gridview_movies);
         gridView.setOnItemClickListener(this);
-        // TODO: 17/11/2015 here pass the urls of the obtained photos to gridView
         gridView.setAdapter(new ImageAdapter(getActivity(), movies));
         return rootView;
     }
@@ -146,9 +145,6 @@ public class FragmentMain extends android.support.v4.app.Fragment implements Ada
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            // TODO: 14/11/2015 I am getting the info from the movies
-            // Log.i(Utilities.TAG, "Results: " + results);
-            Log.i(Utilities.TAG, "Results: " + movies.toString());
             return movies;
         }
     }

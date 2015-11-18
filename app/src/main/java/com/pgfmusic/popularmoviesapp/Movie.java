@@ -1,8 +1,5 @@
 package com.pgfmusic.popularmoviesapp;
 
-/**
- * Created by USUARIO on 17/11/2015.
- */
 public class Movie {
 
     int id;
