@@ -1,8 +1,14 @@
 package com.pgfmusic.popularmoviesapp;
 
 import android.content.Intent;
+
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,21 +33,27 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class FragmentMain extends android.support.v4.app.Fragment implements AdapterView.OnItemClickListener{
+public class FragmentMain extends android.support.v4.app.Fragment implements
+        AdapterView.OnItemClickListener {
 
     GridView gridView;
     ArrayList<Movie> movies;
 
-    // TODO: 18/11/2015 Add menu to implement setting to order by most popular or by highest-rated
+    public static final String ORDER_KEY_PREFS = "order_movies_key";
+    public static String SORT_ORDER = "popularity.desc";
+    // TODO: 14/11/2015 remove api key from here so it doesnt go to github
+    final String TMDB_API_KEY = "760291b7d6ef49594dc98e76ca41fb2d";
+
+    String strUrl;
 
     public FragmentMain() {
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
     }
 
     @Override
@@ -57,11 +69,7 @@ public class FragmentMain extends android.support.v4.app.Fragment implements Ada
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-
-        
-        // TODO: 14/11/2015 remove api key from here so it doesnt go to github
-        final String TMDB_API_KEY = "760291b7d6ef49594dc98e76ca41fb2d";
-        String strUrl = "http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=" + TMDB_API_KEY;
+        strUrl = buildURL();
         FetchMoviesTask fetchMoviesTask = new FetchMoviesTask();
         movies = null;
         try {
@@ -77,6 +85,18 @@ public class FragmentMain extends android.support.v4.app.Fragment implements Ada
         gridView.setOnItemClickListener(this);
         gridView.setAdapter(new ImageAdapter(getActivity(), movies));
         return rootView;
+    }
+
+    private String buildURL() {
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("http")
+                .authority("api.themoviedb.org")
+                .appendPath("3")
+                .appendPath("discover")
+                .appendPath("movie")
+                .appendQueryParameter("sort_by", SORT_ORDER)
+                .appendQueryParameter("api_key", TMDB_API_KEY);
+        return builder.build().toString();
     }
 
 
@@ -188,6 +208,5 @@ public class FragmentMain extends android.support.v4.app.Fragment implements Ada
         startActivity(intent);
 
     }
-
 
 }

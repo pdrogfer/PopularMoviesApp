@@ -1,13 +1,14 @@
 package com.pgfmusic.popularmoviesapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +18,9 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new FragmentMain()).commit();
         }
-        PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.registerOnSharedPreferenceChangeListener(this);
+        // PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);
     }
 
     @Override
@@ -43,5 +46,25 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void restartActivity() {
+        Intent intent = new Intent(MainActivity.this, MainActivity.class);
+        finish();
+        startActivity(intent);
+    }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(FragmentMain.ORDER_KEY_PREFS)) {
+            FragmentMain.SORT_ORDER = sharedPreferences.getString(key, "");
+
+            // TODO: 24/11/2015 UPDATE THE GRID VIEW HERE. NOT WORKING
+            restartActivity();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
 }

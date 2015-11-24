@@ -31,7 +31,7 @@ public class FragmentDetails extends Fragment {
 
             Toast.makeText(getActivity(), id + " " + original_title + " " +
                             poster_path + " " + plot + " " + rating + " " + release_date,
-                    Toast.LENGTH_SHORT).show();
+                    Toast.LENGTH_LONG).show();
             Log.i(Utilities.TAG, id + " " + original_title + " " + poster_path + " " +
                     plot + " " + rating + " " + release_date);
         } else {
