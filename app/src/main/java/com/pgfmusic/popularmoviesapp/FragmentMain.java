@@ -57,6 +57,8 @@ public class FragmentMain extends android.support.v4.app.Fragment implements Ada
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+
+        
         // TODO: 14/11/2015 remove api key from here so it doesnt go to github
         final String TMDB_API_KEY = "760291b7d6ef49594dc98e76ca41fb2d";
         String strUrl = "http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=" + TMDB_API_KEY;
