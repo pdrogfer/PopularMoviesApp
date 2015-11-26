@@ -157,7 +157,7 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
         private ArrayList<Movie> getMoviesDataFromJson(String JsonStr) {
 
             final String TMDB_BASE_URL = "http://image.tmdb.org/t/p/";
-            final String POSTER_SIZE = "w500/";
+            final String POSTER_SIZE = "w342/";
             String tag_ID = "id";
             String tag_title = "title";
             String tag_originalTitle = "original_title";
