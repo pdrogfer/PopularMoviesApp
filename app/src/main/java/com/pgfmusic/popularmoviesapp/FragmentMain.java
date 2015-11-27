@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,12 +59,42 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.main, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.menu_order_popularity) {
+            refreshGridView(true);
+            return true;
+        } else if (id == R.id.menu_order_rating) {
+            refreshGridView(false);
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void refreshGridView(Boolean sortCriteria) {
+        gridView.invalidateViews();
+        if (sortCriteria) {
+            SORT_ORDER = "popularity.desc";
+        } else {
+            SORT_ORDER = "vote_average.desc";
+        }
+
+        strUrl = buildURL();
+        FetchMoviesTask fetchMoviesTask = new FetchMoviesTask();
+        movies = null;
+        try {
+            movies = fetchMoviesTask.execute(strUrl).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            Log.i(Utilities.TAG, "No Movies Added");
+        }
+        gridView.setAdapter(new ImageAdapter(getActivity(), movies));
     }
 
     @Override
