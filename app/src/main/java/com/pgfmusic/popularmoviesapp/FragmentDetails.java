@@ -41,9 +41,8 @@ public class FragmentDetails extends Fragment {
                     .load(intent.getStringExtra("poster_path"))
                     .into(iv_poster);
             tv_titleOriginal.setText(intent.getStringExtra("original_title"));
-            tv_releaseDate.setText(intent.getStringExtra("release_date"));
-            Log.i(Utilities.TAG, "USER RATING: " + intent.getIntExtra("user_rating", 0));
-            //tv_userRating.setText(intent.getIntExtra("user_rating", 0)); // TODO: 18/11/2015 this doesn't work
+            tv_releaseDate.setText("Release: " + intent.getStringExtra("release_date"));
+            tv_userRating.setText("Rating: " + String.valueOf(intent.getDoubleExtra("user_rating", 0)));
             tv_synopsis.setText(intent.getStringExtra("plot"));
 
         } else {

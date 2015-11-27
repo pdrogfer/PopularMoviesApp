@@ -196,7 +196,7 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
 
         Movie tempMovie = movies.get(position);
         Log.i(Utilities.TAG, "Clicked item num. " + position + ". Movie title: " +
-                tempMovie.getTitle());
+                tempMovie.getTitle() + "User Rating: " + tempMovie.getUserRating());
         Intent intent = new Intent(getActivity(), DetailsActivity.class);
         intent.putExtra("id", tempMovie.getId());
         intent.putExtra("title", tempMovie.getTitle());
