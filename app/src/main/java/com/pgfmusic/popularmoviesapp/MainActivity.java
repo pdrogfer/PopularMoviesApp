@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent intent = new Intent(this, PreferencesActivity.class);
@@ -46,25 +45,18 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         return super.onOptionsItemSelected(item);
     }
 
-    private void restartActivity() {
-        Intent intent = new Intent(MainActivity.this, MainActivity.class);
-        finish();
-        startActivity(intent);
-    }
-
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(FragmentMain.ORDER_KEY_PREFS)) {
             FragmentMain.SORT_ORDER = sharedPreferences.getString(key, "");
 
-            // TODO: 24/11/2015 UPDATE THE GRID VIEW HERE. NOT WORKING
             restartActivity();
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
+    private void restartActivity() {
+        Intent intent = new Intent(MainActivity.this, MainActivity.class);
+        finish();
+        startActivity(intent);
     }
 }

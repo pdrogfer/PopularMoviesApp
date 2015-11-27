@@ -7,9 +7,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 public class FragmentDetails extends Fragment {
+
+    ImageView iv_poster;
+    TextView tv_titleOriginal,
+            tv_releaseDate,
+            tv_userRating,
+            tv_synopsis;
 
     public FragmentDetails() {
     }
@@ -18,25 +28,28 @@ public class FragmentDetails extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_details, container, false);
-
+        iv_poster = (ImageView) rootView.findViewById(R.id.ivDetailsPoster);
+        tv_titleOriginal = (TextView) rootView.findViewById(R.id.tvDetailsTitle);
+        tv_releaseDate = (TextView) rootView.findViewById(R.id.tvDetailsReleaseDate);
+        tv_userRating = (TextView) rootView.findViewById(R.id.tvDetailsUserRating);
+        tv_synopsis = (TextView) rootView.findViewById(R.id.tvDetailsSynopsis);
         Intent intent = getActivity().getIntent();
         if (intent != null) {
 
             int id = intent.getIntExtra("id", 0);
-            String original_title = intent.getStringExtra("original_title");
-            String plot = intent.getStringExtra("plot");
-            String poster_path = intent.getStringExtra("poster_path");
-            int rating = intent.getIntExtra("user_rating", 0); // TODO: 18/11/2015 this doesn't work
-            String release_date = intent.getStringExtra("release_date");
+            Picasso.with(getContext())
+                    .load(intent.getStringExtra("poster_path"))
+                    .into(iv_poster);
+            tv_titleOriginal.setText(intent.getStringExtra("original_title"));
+            tv_releaseDate.setText(intent.getStringExtra("release_date"));
+            Log.i(Utilities.TAG, "USER RATING: " + intent.getIntExtra("user_rating", 0));
+            //tv_userRating.setText(intent.getIntExtra("user_rating", 0)); // TODO: 18/11/2015 this doesn't work
+            tv_synopsis.setText(intent.getStringExtra("plot"));
 
-            Toast.makeText(getActivity(), id + " " + original_title + " " +
-                            poster_path + " " + plot + " " + rating + " " + release_date,
-                    Toast.LENGTH_LONG).show();
-            Log.i(Utilities.TAG, id + " " + original_title + " " + poster_path + " " +
-                    plot + " " + rating + " " + release_date);
         } else {
             Log.i(Utilities.TAG, "intent null");
         }
+
 
         return rootView;
     }

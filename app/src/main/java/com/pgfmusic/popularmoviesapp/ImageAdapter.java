@@ -39,7 +39,7 @@ public class ImageAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView = new ImageView(mContext);
 
-        // TODO add placeholders and error poster
+        // TODO add placeholders and error iv_poster
 
         Picasso.with(mContext)
             .load(movies.get(position).getPoster())

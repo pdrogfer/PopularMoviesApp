@@ -2,12 +2,56 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ivDetailsPoster"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="Movie Poster" />
+
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="84dp"
-        android:text="New Text"
-        android:id="@+id/textView"
-        android:layout_gravity="center_horizontal|top"
-        android:textSize="64dp" />
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Original Title"
+        android:id="@+id/tvDetailsTitle"
+        android:layout_below="@id/ivDetailsPoster"
+        android:layout_centerHorizontal="true" />
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvDetailsTitle"
+        android:id="@+id/rowDetails"
+        android:padding="16dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Release Date"
+            android:id="@+id/tvDetailsReleaseDate"
+            android:layout_weight="1"
+            android:gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="User Rating"
+            android:id="@+id/tvDetailsUserRating"
+            android:layout_weight="1"
+            android:gravity="center_horizontal" />
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Synopsis"
+        android:id="@+id/tvDetailsSynopsis"
+        android:layout_below="@+id/rowDetails" />
 </RelativeLayout>
