@@ -48,8 +48,6 @@ public class FragmentDetails extends Fragment {
         } else {
             Log.i(Utilities.TAG, "intent null");
         }
-
-
         return rootView;
     }
 }

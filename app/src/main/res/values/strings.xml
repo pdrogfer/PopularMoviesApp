@@ -1,15 +1,4 @@
 <resources>
     <string name="app_name">PopularMoviesApp</string>
     <string name="action_settings">Settings</string>
-
-    <string-array name="order_UI_Array">
-        <item>Most Popular First</item>
-        <item>Highest Rated First</item>
-    </string-array>
-
-    <string-array name="order_Values">
-        <item>popularity.desc</item>
-        <item>vote_average.desc</item>
-    </string-array>
-    <string name="title_activity_preferences">PreferencesActivity</string>
 </resources>

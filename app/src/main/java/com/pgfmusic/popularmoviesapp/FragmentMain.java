@@ -1,14 +1,9 @@
 package com.pgfmusic.popularmoviesapp;
 
 import android.content.Intent;
-
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import android.preference.Preference;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -82,7 +76,7 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
         } else {
             SORT_ORDER = "vote_average.desc";
         }
-
+        // TODO: 27/11/2015 store SORT_ORDER in Shared Preferences
         strUrl = buildURL();
         FetchMoviesTask fetchMoviesTask = new FetchMoviesTask();
         movies = null;
@@ -129,7 +123,6 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
                 .appendQueryParameter("api_key", TMDB_API_KEY);
         return builder.build().toString();
     }
-
 
     public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
 
