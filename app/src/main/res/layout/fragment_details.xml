@@ -17,9 +17,12 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Original Title"
         android:id="@+id/tvDetailsTitle"
+        android:paddingTop="16dp"
         android:layout_below="@id/ivDetailsPoster"
         android:layout_centerHorizontal="true"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:textSize="@dimen/abc_text_size_display_1_material"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -39,7 +42,8 @@
             android:text="Release Date"
             android:id="@+id/tvDetailsReleaseDate"
             android:layout_weight="1"
-            android:gravity="center_horizontal" />
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/abc_text_size_title_material" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -48,7 +52,8 @@
             android:text="User Rating"
             android:id="@+id/tvDetailsUserRating"
             android:layout_weight="1"
-            android:gravity="center_horizontal" />
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/abc_text_size_title_material" />
 
     </LinearLayout>
     <TextView
@@ -58,5 +63,6 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:id="@+id/tvDetailsSynopsis"
-        android:layout_below="@+id/rowDetails" />
+        android:layout_below="@+id/rowDetails"
+        android:textSize="@dimen/abc_text_size_body_1_material" />
 </RelativeLayout>
