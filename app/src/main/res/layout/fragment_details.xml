@@ -4,10 +4,11 @@
 
     <ImageView
         android:layout_width="fill_parent"
-        android:layout_height="300sp"
+        android:layout_height="420sp"
         android:id="@+id/ivDetailsPoster"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:background="@android:color/background_dark"
         android:contentDescription="Movie Poster" />
 
     <TextView
@@ -54,6 +55,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Synopsis"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:id="@+id/tvDetailsSynopsis"
         android:layout_below="@+id/rowDetails" />
 </RelativeLayout>
