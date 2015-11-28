@@ -6,6 +6,8 @@ package com.pgfmusic.popularmoviesapp;
 public class Utilities {
 
     public static final String TAG = "POPULAR_MOVIES";
+    public static final String TMDB_BASE_URL = "http://image.tmdb.org/t/p/";
+    public static final String POSTER_SIZE = "w342/";
 
 
 }

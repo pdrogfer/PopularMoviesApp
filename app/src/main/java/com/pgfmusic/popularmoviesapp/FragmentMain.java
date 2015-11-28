@@ -180,8 +180,6 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
 
         private ArrayList<Movie> getMoviesDataFromJson(String JsonStr) {
 
-            final String TMDB_BASE_URL = "http://image.tmdb.org/t/p/";
-            final String POSTER_SIZE = "w342/";
             String tag_ID = "id";
             String tag_title = "title";
             String tag_originalTitle = "original_title";
@@ -202,7 +200,7 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
                     String movieTitle = movie.getString(tag_title);
                     String originalTitle = movie.getString(tag_originalTitle);
                     String plot = movie.getString(tag_plot);
-                    String posterPath = TMDB_BASE_URL + POSTER_SIZE + movie.getString(tag_posterPath);
+                    String posterPath = Utilities.TMDB_BASE_URL + Utilities.POSTER_SIZE + movie.getString(tag_posterPath);
                     String releaseDate = movie.getString(tag_releaseDate);
                     int userRating = movie.getInt(tag_userRating);
 

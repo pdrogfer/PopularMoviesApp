@@ -6,12 +6,15 @@
     tools:context=".MainActivity$FragmentMain">
 
     <GridView
+        android:id="@+id/gridview_movies"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/gridview_movies"
-        android:numColumns="3"
-        android:stretchMode="columnWidth"
+        android:layout_centerInParent="true"
         android:gravity="center"
+        android:horizontalSpacing="0dp"
+        android:verticalSpacing="0dp"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth"
         android:clickable="true" />
 
 </FrameLayout>
