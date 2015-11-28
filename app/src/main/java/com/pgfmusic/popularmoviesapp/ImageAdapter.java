@@ -37,7 +37,15 @@ public class ImageAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ImageView imageView = new ImageView(mContext);
+        ImageView imageView;
+
+        if (convertView == null) {
+            imageView = new ImageView(mContext);
+            imageView.setAdjustViewBounds(true);
+            imageView.setPadding(0, 0, 0, 0);
+        } else {
+            imageView = (ImageView) convertView;
+        }
 
         // TODO add placeholders and error iv_poster
 
