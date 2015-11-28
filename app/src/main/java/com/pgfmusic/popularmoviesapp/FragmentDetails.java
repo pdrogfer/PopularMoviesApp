@@ -37,6 +37,7 @@ public class FragmentDetails extends Fragment {
         if (intent != null) {
 
             int id = intent.getIntExtra("id", 0);
+            iv_poster.setAdjustViewBounds(true);
             Picasso.with(getContext())
                     .load(intent.getStringExtra("poster_path"))
                     .into(iv_poster);
