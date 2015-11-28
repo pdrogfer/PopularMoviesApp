@@ -120,6 +120,7 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
                 .appendPath("discover")
                 .appendPath("movie")
                 .appendQueryParameter("sort_by", SORT_ORDER)
+                .appendQueryParameter("vote_count.gte", "100")
                 .appendQueryParameter("api_key", TMDB_API_KEY);
         return builder.build().toString();
     }
