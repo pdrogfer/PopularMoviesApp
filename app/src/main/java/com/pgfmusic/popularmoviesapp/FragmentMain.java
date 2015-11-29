@@ -36,8 +36,6 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
 
     public static final String ORDER_KEY_PREFS = "order_movies_key";
     public static String SORT_ORDER = "popularity.desc";
-    // TODO: 14/11/2015 remove api key from here so it doesnt go to github
-    final String TMDB_API_KEY = "760291b7d6ef49594dc98e76ca41fb2d";
 
     String strUrl;
 
@@ -121,7 +119,7 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
                 .appendPath("movie")
                 .appendQueryParameter("sort_by", SORT_ORDER)
                 .appendQueryParameter("vote_count.gte", "100")
-                .appendQueryParameter("api_key", TMDB_API_KEY);
+                .appendQueryParameter("api_key", Utilities.TMDB_API_KEY);
         return builder.build().toString();
     }
 
