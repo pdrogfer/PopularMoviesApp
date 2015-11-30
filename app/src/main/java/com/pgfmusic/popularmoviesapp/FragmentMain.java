@@ -14,9 +14,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,8 +27,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
-
-import cz.msebera.android.httpclient.Header;
 
 public class FragmentMain extends android.support.v4.app.Fragment implements
         AdapterView.OnItemClickListener {
@@ -88,7 +83,7 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
-            Log.i(Utilities.TAG, "No Movies Added");
+            Log.i(Utils.TAG, "No Movies Added");
         }
         gridView.setAdapter(new ImageAdapter(getActivity(), movies));
     }
@@ -105,7 +100,7 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
-            Log.i(Utilities.TAG, "No Movies Added");
+            Log.i(Utils.TAG, "No Movies Added");
         }
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         gridView = (GridView) rootView.findViewById(R.id.gridview_movies);
@@ -123,7 +118,7 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
                 .appendPath("movie")
                 .appendQueryParameter("sort_by", SORT_ORDER)
                 .appendQueryParameter("vote_count.gte", "100")
-                .appendQueryParameter("api_key", Utilities.TMDB_API_KEY);
+                .appendQueryParameter("api_key", Utils.TMDB_API_KEY);
         return builder.build().toString();
     }
 
@@ -161,7 +156,7 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
                     return null;
                 }
                 answerJsonStr = buffer.toString();
-                Log.i(Utilities.TAG, "JSON from TMDB: " + answerJsonStr);
+                Log.i(Utils.TAG, "JSON from TMDB: " + answerJsonStr);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -174,7 +169,7 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
                     try {
                         reader.close();
                     } catch (final IOException e) {
-                        Log.e(Utilities.TAG, "Error closing stream", e);
+                        Log.e(Utils.TAG, "Error closing stream", e);
                     }
                 }
             }
@@ -203,7 +198,7 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
                     String movieTitle = movie.getString(tag_title);
                     String originalTitle = movie.getString(tag_originalTitle);
                     String plot = movie.getString(tag_plot);
-                    String posterPath = Utilities.TMDB_BASE_URL + Utilities.POSTER_SIZE + movie.getString(tag_posterPath);
+                    String posterPath = Utils.TMDB_BASE_URL + Utils.POSTER_SIZE + movie.getString(tag_posterPath);
                     String releaseDate = movie.getString(tag_releaseDate);
                     int userRating = movie.getInt(tag_userRating);
 
@@ -220,7 +215,7 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
         Movie tempMovie = movies.get(position);
-        Log.i(Utilities.TAG, "Clicked item num. " + position + ". Movie title: " +
+        Log.i(Utils.TAG, "Clicked item num. " + position + ". Movie title: " +
                 tempMovie.getTitle() + "User Rating: " + tempMovie.getUserRating());
         Intent intent = new Intent(getActivity(), DetailsActivity.class);
         intent.putExtra("id", tempMovie.getId());

@@ -1,6 +1,8 @@
 package com.pgfmusic.popularmoviesapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,20 +20,25 @@ import cz.msebera.android.httpclient.Header;
  */
 public class SplashActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (Utilities.TMDB_API_KEY == "") {
+        if (Utils.TMDB_API_KEY == "") {
 
-            getAPIKey("popularmoviesapp");
-
+            SharedPreferences prefs = getSharedPreferences(Utils.APP_PREFERENCES, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("api_key", getAPIKey("popularmoviesapp"));
+        } else {
+            goToMainActivity();
         }
 
 
     }
 
-    public void getAPIKey(String appName) {
+    public String getAPIKey(String appName) {
+
         AsyncHttpClient client = new AsyncHttpClient();
         client.get("http://pgfmusic.com/popularmoviesapp/?app_name=popularmoviesapp", new AsyncHttpResponseHandler() {
 
@@ -47,7 +54,7 @@ public class SplashActivity extends AppCompatActivity {
                 Log.i("APP", jsonAnswer);
                 try {
                     JSONObject jsonObject = new JSONObject(jsonAnswer);
-                    Utilities.TMDB_API_KEY = jsonObject.getString("data");
+                    Utils.TMDB_API_KEY = jsonObject.getString("data");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -56,7 +63,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
                 // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-                Log.i(Utilities.TAG, "Could not retrieve API Key");
+                Log.i(Utils.TAG, "Could not retrieve API Key");
             }
 
             @Override
@@ -67,11 +74,16 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 super.onFinish();
-
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                finish();
+                goToMainActivity();
             }
         });
+        return Utils.TMDB_API_KEY;
+    }
+
+    private void goToMainActivity() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        finish();
     }
 }

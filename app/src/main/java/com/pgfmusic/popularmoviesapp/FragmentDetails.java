@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -47,7 +46,7 @@ public class FragmentDetails extends Fragment {
             tv_synopsis.setText(intent.getStringExtra("plot"));
 
         } else {
-            Log.i(Utilities.TAG, "intent null");
+            Log.i(Utils.TAG, "intent null");
         }
         return rootView;
     }
