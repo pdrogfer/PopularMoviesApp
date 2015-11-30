@@ -14,6 +14,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,6 +30,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
+
+import cz.msebera.android.httpclient.Header;
 
 public class FragmentMain extends android.support.v4.app.Fragment implements
         AdapterView.OnItemClickListener {
@@ -46,7 +51,6 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
     }
 
     @Override
@@ -229,5 +233,6 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
         startActivity(intent);
 
     }
+
 
 }

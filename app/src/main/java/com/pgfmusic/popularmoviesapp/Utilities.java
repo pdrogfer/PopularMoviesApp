@@ -7,9 +7,9 @@ public class Utilities {
 
     public static final String TAG = "POPULAR_MOVIES";
     public static final String TMDB_BASE_URL = "http://image.tmdb.org/t/p/";
-    public static final String POSTER_SIZE = "w342/";
+    public static String POSTER_SIZE = "w342/";
     // TODO: go to http://themoviedb.org/, get your own API Key and put it here
-    public static final String TMDB_API_KEY = "";
+    public static String TMDB_API_KEY = "";
 
 
 }
