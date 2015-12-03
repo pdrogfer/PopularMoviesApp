@@ -19,6 +19,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(this);
+
+        if (prefs.contains(Utilities.ORDER_KEY_PREFS)) {
+            Utilities.SORT_ORDER = prefs.getString(Utilities.ORDER_KEY_PREFS, "");
+        }
     }
 
     @Override
@@ -33,8 +37,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(FragmentMain.ORDER_KEY_PREFS)) {
-            FragmentMain.SORT_ORDER = sharedPreferences.getString(key, "");
+        if (key.equals(Utilities.ORDER_KEY_PREFS)) {
+            Utilities.SORT_ORDER = sharedPreferences.getString(key, "");
         }
     }
 }

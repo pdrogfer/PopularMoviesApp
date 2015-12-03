@@ -33,10 +33,6 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
 
     GridView gridView;
     ArrayList<Movie> movies;
-
-    public static final String ORDER_KEY_PREFS = "order_movies_key";
-    public static String SORT_ORDER = "popularity.desc";
-
     String strUrl;
 
     public FragmentMain() {
@@ -46,7 +42,6 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
     }
 
     @Override
@@ -70,11 +65,11 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
     private void refreshGridView(Boolean sortCriteria) {
         gridView.invalidateViews();
         if (sortCriteria) {
-            SORT_ORDER = "popularity.desc";
+            Utilities.SORT_ORDER = "popularity.desc";
         } else {
-            SORT_ORDER = "vote_average.desc";
+            Utilities.SORT_ORDER = "vote_average.desc";
         }
-        // TODO: 27/11/2015 store SORT_ORDER in Shared Preferences
+
         strUrl = buildURL();
         FetchMoviesTask fetchMoviesTask = new FetchMoviesTask();
         movies = null;
@@ -117,100 +112,13 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
                 .appendPath("3")
                 .appendPath("discover")
                 .appendPath("movie")
-                .appendQueryParameter("sort_by", SORT_ORDER)
+                .appendQueryParameter("sort_by", Utilities.SORT_ORDER)
                 .appendQueryParameter("vote_count.gte", "100")
                 .appendQueryParameter("api_key", Utilities.TMDB_API_KEY);
         return builder.build().toString();
     }
 
-    public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
 
-        @Override
-        protected ArrayList<Movie> doInBackground(String... params) {
-
-            if (params.length == 0) {
-                return null;
-            }
-
-            HttpURLConnection urlConnection = null;
-            BufferedReader reader = null;
-            String answerJsonStr = null;
-
-            try {
-                URL url = new URL(params[0]);
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
-
-                InputStream inputStream = urlConnection.getInputStream();
-                StringBuffer buffer = new StringBuffer();
-                if (inputStream == null) {
-                    return null;
-                }
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    buffer.append(line + "\n");
-                }
-
-                if (buffer.length() == 0) {
-                    return null;
-                }
-                answerJsonStr = buffer.toString();
-                Log.i(Utilities.TAG, "JSON from TMDB: " + answerJsonStr);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    } catch (final IOException e) {
-                        Log.e(Utilities.TAG, "Error closing stream", e);
-                    }
-                }
-            }
-            return getMoviesDataFromJson(answerJsonStr);
-        }
-
-        private ArrayList<Movie> getMoviesDataFromJson(String JsonStr) {
-
-            String tag_ID = "id";
-            String tag_title = "title";
-            String tag_originalTitle = "original_title";
-            String tag_plot = "overview";
-            String tag_posterPath = "poster_path";
-            String tag_releaseDate = "release_date";
-            String tag_userRating = "vote_average";
-            ArrayList<Movie> movies = new ArrayList<>();
-
-            try {
-                JSONObject jsonObject = new JSONObject(JsonStr);
-                JSONArray jsonArray = jsonObject.getJSONArray("results");
-                for (int i = 0; i < jsonArray.length(); i++) {
-
-                    JSONObject movie = jsonArray.getJSONObject(i);
-
-                    int movieID = Integer.parseInt(movie.getString(tag_ID));
-                    String movieTitle = movie.getString(tag_title);
-                    String originalTitle = movie.getString(tag_originalTitle);
-                    String plot = movie.getString(tag_plot);
-                    String posterPath = Utilities.TMDB_BASE_URL + Utilities.POSTER_SIZE + movie.getString(tag_posterPath);
-                    String releaseDate = movie.getString(tag_releaseDate);
-                    int userRating = movie.getInt(tag_userRating);
-
-                    movies.add(new Movie(movieID, movieTitle, originalTitle, plot, posterPath, releaseDate, userRating));
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return movies;
-        }
-    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
