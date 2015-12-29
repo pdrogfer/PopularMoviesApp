@@ -1,14 +1,17 @@
 package com.pgfmusic.popularmoviesapp;
 
-public class Movie {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Movie implements Parcelable {
 
     int id;
     String title;
     String originalTitle;
-    String poster;
     String plotSynopsis;
+    String poster;
+    String releaseDate; // TODO: Change format to Date
     double userRating;
-    String releaseDate;
 
     public Movie(int id, String title, String originalTitle, String plotSynopsis, String poster, String releaseDate, double userRating) {
         this.id = id;
@@ -18,6 +21,46 @@ public class Movie {
         this.poster = poster;
         this.releaseDate = releaseDate;
         this.userRating = userRating;
+    }
+
+    protected Movie(Parcel in) {
+        // the order to read from parcel MUST be the same as writeToParcel
+        id = in.readInt();
+        title = in.readString();
+        originalTitle = in.readString();
+        plotSynopsis = in.readString();
+        poster = in.readString();
+        releaseDate = in.readString();
+        userRating = in.readDouble();
+    }
+
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        // the order of fields in writeToParcel must match the constructor Movie(Parcel in)
+        dest.writeInt(id);
+        dest.writeString(title);
+        dest.writeString(originalTitle);
+        dest.writeString(plotSynopsis);
+        dest.writeString(poster);
+        dest.writeString(releaseDate);
+        dest.writeDouble(userRating);
     }
 
     public int getId() {
@@ -75,4 +118,6 @@ public class Movie {
     public void setUserRating(double userRating) {
         this.userRating = userRating;
     }
+
+
 }

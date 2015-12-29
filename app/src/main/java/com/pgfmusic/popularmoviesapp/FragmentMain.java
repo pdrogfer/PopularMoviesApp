@@ -52,7 +52,6 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
         if (id == R.id.menu_order_popularity) {
             refreshGridView(true);
             return true;
@@ -118,8 +117,6 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
         return builder.build().toString();
     }
 
-
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -138,4 +135,10 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
 
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // TODO: 03/12/2015 save parcelled data
+        outState.putParcelableArrayList("array_of_movies", movies);
+    }
 }
