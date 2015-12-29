@@ -33,10 +33,6 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
 
     GridView gridView;
     ArrayList<Movie> movies;
-
-    public static final String ORDER_KEY_PREFS = "order_movies_key";
-    public static String SORT_ORDER = "popularity.desc";
-
     String strUrl;
 
     public FragmentMain() {
@@ -56,7 +52,6 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
         if (id == R.id.menu_order_popularity) {
             refreshGridView(true);
             return true;
@@ -69,11 +64,11 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
     private void refreshGridView(Boolean sortCriteria) {
         gridView.invalidateViews();
         if (sortCriteria) {
-            SORT_ORDER = "popularity.desc";
+            Utils.SORT_ORDER = "popularity.desc";
         } else {
-            SORT_ORDER = "vote_average.desc";
+            Utils.SORT_ORDER = "vote_average.desc";
         }
-        // TODO: 27/11/2015 store SORT_ORDER in Shared Preferences
+
         strUrl = buildURL();
         FetchMoviesTask fetchMoviesTask = new FetchMoviesTask();
         movies = null;
@@ -116,7 +111,7 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
                 .appendPath("3")
                 .appendPath("discover")
                 .appendPath("movie")
-                .appendQueryParameter("sort_by", SORT_ORDER)
+                .appendQueryParameter("sort_by", Utils.SORT_ORDER)
                 .appendQueryParameter("vote_count.gte", "100")
                 .appendQueryParameter("api_key", Utils.TMDB_API_KEY);
         return builder.build().toString();
@@ -229,5 +224,11 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
 
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // save parcelled data
+        outState.putParcelableArrayList("array_of_movies", movies);
+    }
 
 }
