@@ -31,7 +31,7 @@ import java.util.concurrent.ExecutionException;
 public class FragmentMain extends android.support.v4.app.Fragment implements
         AdapterView.OnItemClickListener {
 
-    GridView gridView;
+    GridView gridViewMovies;
     ArrayList<Movie> movies;
     String strUrl;
 
@@ -71,14 +71,14 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
     }
 
     private void refreshGridView(int sortCriteria) {
-        gridView.invalidateViews();
+        gridViewMovies.invalidateViews();
         if (sortCriteria == 1) {
             Utils.SORT_ORDER = Utils.ORDER_BY_POPULARITY;
         } else if (sortCriteria == 2) {
             Utils.SORT_ORDER = Utils.ORDER_BY_RATINGS;
         } else if (sortCriteria == 3) {
             /* TODO: 29/12/2015 retrieve favourites list from database/shared prefs and populate
-            * 'movies' before calling 'gridView.setAdapter'
+            * 'movies' before calling 'gridViewMovies.setAdapter'
             * directly, no need to call FetchMoviesTask
             */
 
@@ -95,7 +95,7 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
             e.printStackTrace();
             Log.i(Utils.TAG, "No Movies Added");
         }
-        gridView.setAdapter(new ImageAdapter(getActivity(), movies));
+        gridViewMovies.setAdapter(new ImageAdapter(getActivity(), movies));
     }
 
     @Override
@@ -113,9 +113,9 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
             Log.i(Utils.TAG, "No Movies Added");
         }
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        gridView = (GridView) rootView.findViewById(R.id.gridview_movies);
-        gridView.setOnItemClickListener(this);
-        gridView.setAdapter(new ImageAdapter(getActivity(), movies));
+        gridViewMovies = (GridView) rootView.findViewById(R.id.gridview_movies);
+        gridViewMovies.setOnItemClickListener(this);
+        gridViewMovies.setAdapter(new ImageAdapter(getActivity(), movies));
         return rootView;
     }
 

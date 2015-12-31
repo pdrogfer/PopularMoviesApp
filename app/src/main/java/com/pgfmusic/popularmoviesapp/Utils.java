@@ -17,6 +17,7 @@ public class Utils {
     public static final String ORDER_KEY_PREFS = "order_movies_key";
     public static final String ORDER_BY_POPULARITY = "popularity.desc";
     public static final String ORDER_BY_RATINGS = "vote_average.desc";
+    // user can change sort order at run time
     public static String SORT_ORDER = ORDER_BY_POPULARITY;
 
 }
