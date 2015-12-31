@@ -52,21 +52,36 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.menu_order_popularity) {
-            refreshGridView(true);
-            return true;
-        } else if (id == R.id.menu_order_rating) {
-            refreshGridView(false);
+//        if (id == R.id.menu_order_popularity) {
+//            refreshGridView(true);
+//            return true;
+//        } else if (id == R.id.menu_order_rating) {
+//            refreshGridView(false);
+//        }
+        switch (id) {
+            case R.id.menu_order_popularity:
+                refreshGridView(1);
+                return true;
+            case R.id.menu_order_rating:
+                refreshGridView(2);
+            case R.id.menu_favourites:
+                refreshGridView(3);
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void refreshGridView(Boolean sortCriteria) {
+    private void refreshGridView(int sortCriteria) {
         gridView.invalidateViews();
-        if (sortCriteria) {
-            Utils.SORT_ORDER = "popularity.desc";
-        } else {
-            Utils.SORT_ORDER = "vote_average.desc";
+        if (sortCriteria == 1) {
+            Utils.SORT_ORDER = Utils.ORDER_BY_POPULARITY;
+        } else if (sortCriteria == 2) {
+            Utils.SORT_ORDER = Utils.ORDER_BY_RATINGS;
+        } else if (sortCriteria == 3) {
+            /* TODO: 29/12/2015 retrieve favourites list from database/shared prefs and populate
+            * 'movies' before calling 'gridView.setAdapter'
+            * directly, no need to call FetchMoviesTask
+            */
+
         }
 
         strUrl = buildURL();

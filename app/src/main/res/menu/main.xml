@@ -14,4 +14,9 @@
         android:title="Order by Rating"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/menu_favourites"
+        android:title="See Favourite Movies"
+        app:showAsAction="never" />
+
 </menu>
