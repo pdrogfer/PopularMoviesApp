@@ -145,6 +145,7 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
         return builder.build().toString();
     }
 
+    // TODO: 02/01/2016 use a library for this http background request
     public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
 
         @Override
@@ -242,16 +243,32 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
                 tempMovie.getTitle() + "User Rating: " + tempMovie.getUserRating());
 
         // TODO: 02/01/2016 handle differently if tabletMode is active or not
-        Intent intent = new Intent(getActivity(), DetailsActivity.class);
-        intent.putExtra("id", tempMovie.getId());
-        intent.putExtra("title", tempMovie.getTitle());
-        intent.putExtra("original_title", tempMovie.getOriginalTitle());
-        intent.putExtra("plot", tempMovie.getPlotSynopsis());
-        intent.putExtra("poster_path", tempMovie.getPoster());
-        intent.putExtra("release_date", tempMovie.getReleaseDate());
-        intent.putExtra("user_rating", tempMovie.getUserRating());
-        startActivity(intent);
 
+        if (Utils.TABLET_MODE) {
+            Bundle movieDetails = new Bundle();
+            movieDetails.putInt("id", tempMovie.getId());
+            movieDetails.putString("title", tempMovie.getTitle());
+            movieDetails.putString("original_title", tempMovie.getOriginalTitle());
+            movieDetails.putString("plot", tempMovie.getPlotSynopsis());
+            movieDetails.putString("poster_path", tempMovie.getPoster());
+            movieDetails.putString("release_date", tempMovie.getReleaseDate());
+            movieDetails.putDouble("user_rating", tempMovie.getUserRating());
+            FragmentDetails fragmentDetails = new FragmentDetails();
+            fragmentDetails.setArguments(movieDetails);
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.movie_detail_container, fragmentDetails)
+                    .commit();
+        } else {
+            Intent intent = new Intent(getActivity(), DetailsActivity.class);
+            intent.putExtra("id", tempMovie.getId());
+            intent.putExtra("title", tempMovie.getTitle());
+            intent.putExtra("original_title", tempMovie.getOriginalTitle());
+            intent.putExtra("plot", tempMovie.getPlotSynopsis());
+            intent.putExtra("poster_path", tempMovie.getPoster());
+            intent.putExtra("release_date", tempMovie.getReleaseDate());
+            intent.putExtra("user_rating", tempMovie.getUserRating());
+            startActivity(intent);
+        }
     }
 
     @Override

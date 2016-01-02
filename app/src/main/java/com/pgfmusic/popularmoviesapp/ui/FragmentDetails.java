@@ -47,7 +47,16 @@ public class FragmentDetails extends Fragment {
             tv_userRating.setText("Rating: " + String.valueOf(intent.getDoubleExtra("user_rating", 0)));
             tv_synopsis.setText(intent.getStringExtra("plot"));
 
-        } else {
+        } else if (getArguments().containsKey("id")) {
+            iv_poster.setAdjustViewBounds(true);
+            Picasso.with(getContext())
+                    .load(savedInstanceState.getString("poster_path"))
+                    .into(iv_poster);
+            tv_titleOriginal.setText(savedInstanceState.getString("original_title"));
+            tv_releaseDate.setText("Release: " + savedInstanceState.getString("release_date"));
+            tv_userRating.setText("Rating: " + String.valueOf(savedInstanceState.getDouble("user_rating")));
+            tv_synopsis.setText(savedInstanceState.getString("plot"));
+        } else{
             Log.i(Utils.TAG, "intent null");
         }
         return rootView;
