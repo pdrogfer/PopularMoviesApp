@@ -1,4 +1,4 @@
-package com.pgfmusic.popularmoviesapp;
+package com.pgfmusic.popularmoviesapp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.pgfmusic.popularmoviesapp.R;
+import com.pgfmusic.popularmoviesapp.Utils;
 import com.squareup.picasso.Picasso;
 
 public class FragmentDetails extends Fragment {

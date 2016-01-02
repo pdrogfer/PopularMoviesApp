@@ -1,4 +1,4 @@
-package com.pgfmusic.popularmoviesapp;
+package com.pgfmusic.popularmoviesapp.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.pgfmusic.popularmoviesapp.Utils;
+import com.pgfmusic.popularmoviesapp.ui.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;

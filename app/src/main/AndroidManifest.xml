@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.pgfmusic.popularmoviesapp" >
+    package="com.pgfmusic.popularmoviesapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -9,22 +9,35 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".MainActivity" >
+        android:theme="@style/AppTheme">
+        <activity android:name=".ui.MainActivity">
+
             <!-- this is no longer the Launcher activity, but SplashActivity is -->
         </activity>
-
-        <activity android:name=".DetailsActivity"
-            android:theme="@style/DetailsTheme">
-        </activity>
-
         <activity
-            android:name=".SplashActivity"
+            android:name=".ui.DetailsActivity"
+            android:theme="@style/DetailsTheme"></activity>
+        <activity
+            android:name=".ui.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.SingleItemListActivity"
+            android:label="@string/title_singleitem_list"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".ui.SingleItemDetailActivity"
+            android:label="@string/title_singleitem_detail"
+            android:parentActivityName=".ui.SingleItemListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pgfmusic.popularmoviesapp.ui.SingleItemListActivity" />
         </activity>
     </application>
 

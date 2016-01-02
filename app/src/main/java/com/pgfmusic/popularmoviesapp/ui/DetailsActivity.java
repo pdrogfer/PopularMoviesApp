@@ -1,7 +1,9 @@
-package com.pgfmusic.popularmoviesapp;
+package com.pgfmusic.popularmoviesapp.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.pgfmusic.popularmoviesapp.R;
 
 public class DetailsActivity extends AppCompatActivity {
 

@@ -20,4 +20,6 @@ public class Utils {
     // user can change sort order at run time
     public static String SORT_ORDER = ORDER_BY_POPULARITY;
 
+    public static boolean TABLET_MODE = false;
+
 }

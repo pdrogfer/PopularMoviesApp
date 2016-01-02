@@ -1,4 +1,4 @@
-package com.pgfmusic.popularmoviesapp;
+package com.pgfmusic.popularmoviesapp.ui;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,8 +8,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.facebook.stetho.Stetho;
+import com.pgfmusic.popularmoviesapp.R;
+import com.pgfmusic.popularmoviesapp.Utils;
+import com.pgfmusic.popularmoviesapp.ui.FragmentMain;
 
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
