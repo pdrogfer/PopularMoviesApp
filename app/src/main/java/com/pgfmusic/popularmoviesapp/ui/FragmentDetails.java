@@ -25,6 +25,7 @@ public class FragmentDetails extends Fragment {
     public FragmentDetails() {
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -34,9 +35,19 @@ public class FragmentDetails extends Fragment {
         tv_releaseDate = (TextView) rootView.findViewById(R.id.tvDetailsReleaseDate);
         tv_userRating = (TextView) rootView.findViewById(R.id.tvDetailsUserRating);
         tv_synopsis = (TextView) rootView.findViewById(R.id.tvDetailsSynopsis);
-        Intent intent = getActivity().getIntent();
-        if (intent != null) {
 
+        if (Utils.TABLET_MODE) {
+            iv_poster.setAdjustViewBounds(true);
+            Picasso.with(getContext())
+                    .load(getArguments().getString("poster_path"))
+                    .into(iv_poster);
+            tv_titleOriginal.setText(getArguments().getString("original_title"));
+            tv_releaseDate.setText("Release: " + getArguments().getString("release_date"));
+            tv_userRating.setText("Rating: " + String.valueOf(getArguments().getDouble("user_rating")));
+            tv_synopsis.setText(getArguments().getString("plot"));
+
+        } else {
+            Intent intent = getActivity().getIntent();
             int id = intent.getIntExtra("id", 0);
             iv_poster.setAdjustViewBounds(true);
             Picasso.with(getContext())
@@ -46,18 +57,6 @@ public class FragmentDetails extends Fragment {
             tv_releaseDate.setText("Release: " + intent.getStringExtra("release_date"));
             tv_userRating.setText("Rating: " + String.valueOf(intent.getDoubleExtra("user_rating", 0)));
             tv_synopsis.setText(intent.getStringExtra("plot"));
-
-        } else if (getArguments().containsKey("id")) {
-            iv_poster.setAdjustViewBounds(true);
-            Picasso.with(getContext())
-                    .load(savedInstanceState.getString("poster_path"))
-                    .into(iv_poster);
-            tv_titleOriginal.setText(savedInstanceState.getString("original_title"));
-            tv_releaseDate.setText("Release: " + savedInstanceState.getString("release_date"));
-            tv_userRating.setText("Rating: " + String.valueOf(savedInstanceState.getDouble("user_rating")));
-            tv_synopsis.setText(savedInstanceState.getString("plot"));
-        } else{
-            Log.i(Utils.TAG, "intent null");
         }
         return rootView;
     }
