@@ -37,26 +37,27 @@ public class FragmentDetails extends Fragment {
         tv_synopsis = (TextView) rootView.findViewById(R.id.tvDetailsSynopsis);
 
         if (Utils.TABLET_MODE) {
+            Bundle movieDetails = getArguments();
             iv_poster.setAdjustViewBounds(true);
             Picasso.with(getContext())
-                    .load(getArguments().getString("poster_path"))
+                    .load(movieDetails.getString(Utils.MOVIE_POSTER_PATH))
                     .into(iv_poster);
-            tv_titleOriginal.setText(getArguments().getString("original_title"));
-            tv_releaseDate.setText("Release: " + getArguments().getString("release_date"));
-            tv_userRating.setText("Rating: " + String.valueOf(getArguments().getDouble("user_rating")));
-            tv_synopsis.setText(getArguments().getString("plot"));
+            tv_titleOriginal.setText(movieDetails.getString(Utils.MOVIE_ORIGINAL_TITLE));
+            tv_releaseDate.setText("Release: " + movieDetails.getString(Utils.MOVIE_RELEASE_DATE));
+            tv_userRating.setText("Rating: " + String.valueOf(movieDetails.getDouble(Utils.MOVIE_USER_RATING)));
+            tv_synopsis.setText(movieDetails.getString(Utils.MOVIE_PLOT));
 
         } else {
             Intent intent = getActivity().getIntent();
             int id = intent.getIntExtra("id", 0);
             iv_poster.setAdjustViewBounds(true);
             Picasso.with(getContext())
-                    .load(intent.getStringExtra("poster_path"))
+                    .load(intent.getStringExtra(Utils.MOVIE_POSTER_PATH))
                     .into(iv_poster);
-            tv_titleOriginal.setText(intent.getStringExtra("original_title"));
-            tv_releaseDate.setText("Release: " + intent.getStringExtra("release_date"));
-            tv_userRating.setText("Rating: " + String.valueOf(intent.getDoubleExtra("user_rating", 0)));
-            tv_synopsis.setText(intent.getStringExtra("plot"));
+            tv_titleOriginal.setText(intent.getStringExtra(Utils.MOVIE_ORIGINAL_TITLE));
+            tv_releaseDate.setText("Release: " + intent.getStringExtra(Utils.MOVIE_RELEASE_DATE));
+            tv_userRating.setText("Rating: " + String.valueOf(intent.getDoubleExtra(Utils.MOVIE_USER_RATING, 0)));
+            tv_synopsis.setText(intent.getStringExtra(Utils.MOVIE_PLOT));
         }
         return rootView;
     }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -32,6 +33,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 public class FragmentMain extends android.support.v4.app.Fragment implements
@@ -242,17 +247,15 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
         Log.i(Utils.TAG, "Clicked item num. " + position + ". Movie title: " +
                 tempMovie.getTitle() + "User Rating: " + tempMovie.getUserRating());
 
-        // TODO: 02/01/2016 handle differently if tabletMode is active or not
-
         if (Utils.TABLET_MODE) {
             Bundle movieDetails = new Bundle();
-            movieDetails.putInt("id", tempMovie.getId());
-            movieDetails.putString("title", tempMovie.getTitle());
-            movieDetails.putString("original_title", tempMovie.getOriginalTitle());
-            movieDetails.putString("plot", tempMovie.getPlotSynopsis());
-            movieDetails.putString("poster_path", tempMovie.getPoster());
-            movieDetails.putString("release_date", tempMovie.getReleaseDate());
-            movieDetails.putDouble("user_rating", tempMovie.getUserRating());
+            movieDetails.putInt(Utils.MOVIE_ID, tempMovie.getId());
+            movieDetails.putString(Utils.MOVIE_TITLE, tempMovie.getTitle());
+            movieDetails.putString(Utils.MOVIE_ORIGINAL_TITLE, tempMovie.getOriginalTitle());
+            movieDetails.putString(Utils.MOVIE_PLOT, tempMovie.getPlotSynopsis());
+            movieDetails.putString(Utils.MOVIE_POSTER_PATH, tempMovie.getPoster());
+            movieDetails.putString(Utils.MOVIE_RELEASE_DATE, tempMovie.getReleaseDate());
+            movieDetails.putDouble(Utils.MOVIE_USER_RATING, tempMovie.getUserRating());
             FragmentDetails fragmentDetails = new FragmentDetails();
             fragmentDetails.setArguments(movieDetails);
             getActivity().getSupportFragmentManager().beginTransaction()
@@ -260,13 +263,13 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
                     .commit();
         } else {
             Intent intent = new Intent(getActivity(), DetailsActivity.class);
-            intent.putExtra("id", tempMovie.getId());
-            intent.putExtra("title", tempMovie.getTitle());
-            intent.putExtra("original_title", tempMovie.getOriginalTitle());
-            intent.putExtra("plot", tempMovie.getPlotSynopsis());
-            intent.putExtra("poster_path", tempMovie.getPoster());
-            intent.putExtra("release_date", tempMovie.getReleaseDate());
-            intent.putExtra("user_rating", tempMovie.getUserRating());
+            intent.putExtra(Utils.MOVIE_ID, tempMovie.getId());
+            intent.putExtra(Utils.MOVIE_TITLE, tempMovie.getTitle());
+            intent.putExtra(Utils.MOVIE_ORIGINAL_TITLE, tempMovie.getOriginalTitle());
+            intent.putExtra(Utils.MOVIE_PLOT, tempMovie.getPlotSynopsis());
+            intent.putExtra(Utils.MOVIE_POSTER_PATH, tempMovie.getPoster());
+            intent.putExtra(Utils.MOVIE_RELEASE_DATE, tempMovie.getReleaseDate());
+            intent.putExtra(Utils.MOVIE_USER_RATING, tempMovie.getUserRating());
             startActivity(intent);
         }
     }

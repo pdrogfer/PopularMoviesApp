@@ -22,4 +22,13 @@ public class Utils {
 
     public static boolean TABLET_MODE = false;
 
+    // Keys to identify movie values in bundle and intent transactions
+    public static final String MOVIE_ID = "id";
+    public static final String MOVIE_TITLE = "title";
+    public static final String MOVIE_ORIGINAL_TITLE = "original_title";
+    public static final String MOVIE_PLOT = "plot";
+    public static final String MOVIE_POSTER_PATH = "poster_path";
+    public static final String MOVIE_RELEASE_DATE = "release_date";
+    public static final String MOVIE_USER_RATING = "user_rating";
+
 }
