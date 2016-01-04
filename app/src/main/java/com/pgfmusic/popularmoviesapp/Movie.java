@@ -50,6 +50,10 @@ public class Movie implements Parcelable {
         }
     };
 
+    public Movie() {
+        // empty constructor used to store temp values
+    }
+
     @Override
     public int describeContents() {
         return 0;

@@ -64,12 +64,7 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-//        if (id == R.id.menu_order_popularity) {
-//            refreshGridView(true);
-//            return true;
-//        } else if (id == R.id.menu_order_rating) {
-//            refreshGridView(false);
-//        }
+
         switch (id) {
             case R.id.menu_order_popularity:
                 refreshGridView(1);
@@ -93,6 +88,7 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
             * 'movies' before calling 'gridViewMovies.setAdapter'
             * directly, no need to call FetchMoviesTask
             */
+
 
         }
 
@@ -167,6 +163,7 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
             movieDetails.putString(Utils.MOVIE_POSTER_PATH, tempMovie.getPoster());
             movieDetails.putString(Utils.MOVIE_RELEASE_DATE, tempMovie.getReleaseDate());
             movieDetails.putDouble(Utils.MOVIE_USER_RATING, tempMovie.getUserRating());
+            movieDetails.putInt(Utils.MOVIE_IS_FAVOURITE, tempMovie.getIsFavourite());
             FragmentDetails fragmentDetails = new FragmentDetails();
             fragmentDetails.setArguments(movieDetails);
             getActivity().getSupportFragmentManager().beginTransaction()

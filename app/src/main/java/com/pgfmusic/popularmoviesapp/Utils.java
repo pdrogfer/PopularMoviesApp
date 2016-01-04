@@ -1,5 +1,7 @@
 package com.pgfmusic.popularmoviesapp;
 
+import java.util.ArrayList;
+
 /**
  * Created by USUARIO on 14/11/2015.
  */
@@ -11,6 +13,7 @@ public class Utils {
     public static final String APP_PREFERENCES = "app__prefs";
 
     public static final String POSTER_SIZE = "w342/";
+    public static final String DB_MOVIES = "DB_FAVOURITE_MOVIES";
     // Go to http://themoviedb.org/, get your own API Key and put it here
     public static String TMDB_API_KEY = "760291b7d6ef49594dc98e76ca41fb2d";
 
@@ -24,7 +27,7 @@ public class Utils {
     public static boolean TABLET_MODE = false;
 
     // Keys to identify movie values in bundle and intent transactions
-    public static final String MOVIE_ID = "id";
+    public static final String MOVIE_ID = "_id";
     public static final String MOVIE_TITLE = "title";
     public static final String MOVIE_ORIGINAL_TITLE = "original_title";
     public static final String MOVIE_PLOT = "plot";
@@ -32,5 +35,7 @@ public class Utils {
     public static final String MOVIE_RELEASE_DATE = "release_date";
     public static final String MOVIE_USER_RATING = "user_rating";
     public static final String MOVIE_IS_FAVOURITE = "is_favourite";
+
+    public static ArrayList<Integer> dummy_favourites = new ArrayList<>();
 
 }
