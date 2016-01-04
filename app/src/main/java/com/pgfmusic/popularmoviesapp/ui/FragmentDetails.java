@@ -2,8 +2,9 @@ package com.pgfmusic.popularmoviesapp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +15,16 @@ import com.pgfmusic.popularmoviesapp.R;
 import com.pgfmusic.popularmoviesapp.Utils;
 import com.squareup.picasso.Picasso;
 
-public class FragmentDetails extends Fragment {
+public class FragmentDetails extends Fragment implements View.OnClickListener{
 
     ImageView iv_poster;
     TextView tv_titleOriginal,
             tv_releaseDate,
             tv_userRating,
             tv_synopsis;
+    FloatingActionButton isFavourite;
+
+
 
     public FragmentDetails() {
     }
@@ -35,6 +39,16 @@ public class FragmentDetails extends Fragment {
         tv_releaseDate = (TextView) rootView.findViewById(R.id.tvDetailsReleaseDate);
         tv_userRating = (TextView) rootView.findViewById(R.id.tvDetailsUserRating);
         tv_synopsis = (TextView) rootView.findViewById(R.id.tvDetailsSynopsis);
+        isFavourite = (FloatingActionButton) rootView.findViewById(R.id.btn_favourite);
+
+        isFavourite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Snackbar.make(v, "Movie Favourite state changed", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
         if (Utils.TABLET_MODE) {
             Bundle movieDetails = getArguments();
@@ -60,5 +74,10 @@ public class FragmentDetails extends Fragment {
             tv_synopsis.setText(intent.getStringExtra(Utils.MOVIE_PLOT));
         }
         return rootView;
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }

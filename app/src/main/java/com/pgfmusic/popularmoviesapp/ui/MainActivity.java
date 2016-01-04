@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         if (prefs.contains(Utils.ORDER_KEY_PREFS)) {
             Utils.SORT_ORDER = prefs.getString(Utils.ORDER_KEY_PREFS, "");
         }
+
+
     }
 
     @Override

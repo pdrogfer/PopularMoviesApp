@@ -12,8 +12,10 @@ public class Movie implements Parcelable {
     String poster;
     String releaseDate; // TODO: Change format to Date
     double userRating;
+    int isFavourite; // stores the favourite state of a movie, 0 = not, 1 = yes
 
-    public Movie(int id, String title, String originalTitle, String plotSynopsis, String poster, String releaseDate, double userRating) {
+    public Movie(int id, String title, String originalTitle, String plotSynopsis, String poster,
+                 String releaseDate, double userRating, int isFavourite) {
         this.id = id;
         this.title = title;
         this.originalTitle = originalTitle;
@@ -21,6 +23,7 @@ public class Movie implements Parcelable {
         this.poster = poster;
         this.releaseDate = releaseDate;
         this.userRating = userRating;
+        this.isFavourite = isFavourite;
     }
 
     protected Movie(Parcel in) {
@@ -32,6 +35,7 @@ public class Movie implements Parcelable {
         poster = in.readString();
         releaseDate = in.readString();
         userRating = in.readDouble();
+        isFavourite = in.readInt();
     }
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {
@@ -61,6 +65,7 @@ public class Movie implements Parcelable {
         dest.writeString(poster);
         dest.writeString(releaseDate);
         dest.writeDouble(userRating);
+        dest.writeInt(isFavourite);
     }
 
     public int getId() {
@@ -119,5 +124,11 @@ public class Movie implements Parcelable {
         this.userRating = userRating;
     }
 
+    public int getIsFavourite() {
+        return isFavourite;
+    }
 
+    public void setIsFavourite(int isFavourite) {
+        this.isFavourite = isFavourite;
+    }
 }

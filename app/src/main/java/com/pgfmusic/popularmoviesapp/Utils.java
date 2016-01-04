@@ -30,5 +30,6 @@ public class Utils {
     public static final String MOVIE_POSTER_PATH = "poster_path";
     public static final String MOVIE_RELEASE_DATE = "release_date";
     public static final String MOVIE_USER_RATING = "user_rating";
+    public static final String MOVIE_IS_FAVOURITE = "is_favourite";
 
 }

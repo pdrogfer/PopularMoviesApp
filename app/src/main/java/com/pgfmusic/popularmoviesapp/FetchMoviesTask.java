@@ -92,11 +92,15 @@ public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
                 String movieTitle = movie.getString(tag_title);
                 String originalTitle = movie.getString(tag_originalTitle);
                 String plot = movie.getString(tag_plot);
-                String posterPath = Utils.TMDB_BASE_URL + Utils.POSTER_SIZE + movie.getString(tag_posterPath);
+                String posterPath = Utils.TMDB_BASE_URL +
+                        Utils.POSTER_SIZE +
+                        movie.getString(tag_posterPath);
                 String releaseDate = movie.getString(tag_releaseDate);
                 int userRating = movie.getInt(tag_userRating);
+                int isFavourite = 0;
 
-                movies.add(new Movie(movieID, movieTitle, originalTitle, plot, posterPath, releaseDate, userRating));
+                movies.add(new Movie(movieID, movieTitle, originalTitle, plot, posterPath,
+                        releaseDate, userRating, isFavourite));
             }
         } catch (JSONException e) {
             e.printStackTrace();
