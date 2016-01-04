@@ -132,6 +132,7 @@ public class Movie implements Parcelable {
         return isFavourite;
     }
 
+    // change Favourite state of a movie, 0 = false, 1 = true
     public void setIsFavourite(int isFavourite) {
         this.isFavourite = isFavourite;
     }

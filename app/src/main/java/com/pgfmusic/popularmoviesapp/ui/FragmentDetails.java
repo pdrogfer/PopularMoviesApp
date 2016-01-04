@@ -84,26 +84,35 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
         switch (v.getId()) {
             case R.id.btn_favourite:
 
-                // if !isFavourite, insert movie in db and set isFavourite = 1
-                // if isFavourite, delete from db and set isFavourite = 0
-
-                DbHelper dbHelper = new DbHelper(getContext(), Utils.DB_MOVIES, null, 1);
-                SQLiteDatabase db = dbHelper.getWritableDatabase();
-                if (db != null) {
-                    ContentValues newMovieValues = new ContentValues();
-                    newMovieValues.put(Utils.MOVIE_ID, tempMovie.getId());
-                    newMovieValues.put(Utils.MOVIE_TITLE, tempMovie.getTitle());
-                    newMovieValues.put(Utils.MOVIE_ORIGINAL_TITLE, tempMovie.getOriginalTitle());
-                    newMovieValues.put(Utils.MOVIE_PLOT, tempMovie.getPlotSynopsis());
-                    newMovieValues.put(Utils.MOVIE_POSTER_PATH, tempMovie.getPoster());
-                    newMovieValues.put(Utils.MOVIE_RELEASE_DATE, tempMovie.getReleaseDate());
-                    newMovieValues.put(Utils.MOVIE_USER_RATING, tempMovie.getUserRating());
-                    newMovieValues.put(Utils.MOVIE_IS_FAVOURITE, tempMovie.getIsFavourite());
-                    Long i = db.insert("Movies", null, newMovieValues);
-                    if (i > 0) {
-                        Toast.makeText(getActivity(), "Movie saved in Favourites", Toast.LENGTH_SHORT).show();
+                if (tempMovie.getIsFavourite() == 1) {
+                    // movie is in Favourites list. Remove it from there
+                    // and call tempMovie.setIsFavourite(0);
+                    Toast.makeText(getContext(), "Movie is already a favourite", Toast.LENGTH_LONG)
+                            .show();
+                } else {
+                    // movie is not in Favourites. Call tempMovie.setIsFavourite(1) and add it to
+                    // database
+                    DbHelper dbHelper = new DbHelper(getContext(), Utils.DB_MOVIES, null, 2);
+                    SQLiteDatabase db = dbHelper.getWritableDatabase();
+                    if (db != null) {
+                        tempMovie.setIsFavourite(1);
+                        ContentValues newMovieValues = new ContentValues();
+                        newMovieValues.put(Utils.MOVIE_ID, tempMovie.getId());
+                        newMovieValues.put(Utils.MOVIE_TITLE, tempMovie.getTitle());
+                        newMovieValues.put(Utils.MOVIE_ORIGINAL_TITLE, tempMovie.getOriginalTitle());
+                        newMovieValues.put(Utils.MOVIE_PLOT, tempMovie.getPlotSynopsis());
+                        newMovieValues.put(Utils.MOVIE_POSTER_PATH, tempMovie.getPoster());
+                        newMovieValues.put(Utils.MOVIE_RELEASE_DATE, tempMovie.getReleaseDate());
+                        newMovieValues.put(Utils.MOVIE_USER_RATING, tempMovie.getUserRating());
+                        newMovieValues.put(Utils.MOVIE_IS_FAVOURITE, tempMovie.getIsFavourite());
+                        Long i = db.insert("Movies", null, newMovieValues);
+                        if (i > 0) {
+                            Toast.makeText(getActivity(), "Movie saved in Favourites", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
+
+
 
                 break;
         }

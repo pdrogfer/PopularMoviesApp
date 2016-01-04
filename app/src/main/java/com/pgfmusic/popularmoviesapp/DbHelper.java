@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DbHelper extends SQLiteOpenHelper {
 
     private static final String createDB =
-            "CREATE TABLE Movies (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            "CREATE TABLE Movies (_id INTEGER PRIMARY KEY, " +
                     "title TEXT NOT NULL, " +
                     "original_title TEXT NOT NULL, " +
                     "plot TEXT NOT NULL, " +
