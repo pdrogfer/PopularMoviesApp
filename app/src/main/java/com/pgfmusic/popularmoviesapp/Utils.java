@@ -14,6 +14,7 @@ public class Utils {
 
     public static final String POSTER_SIZE = "w342/";
     public static final String DB_MOVIES = "DB_FAVOURITE_MOVIES";
+    public static final String DB_MOVIES_TABLE_NAME = "Movies";
     // Go to http://themoviedb.org/, get your own API Key and put it here
     public static String TMDB_API_KEY = "760291b7d6ef49594dc98e76ca41fb2d";
 

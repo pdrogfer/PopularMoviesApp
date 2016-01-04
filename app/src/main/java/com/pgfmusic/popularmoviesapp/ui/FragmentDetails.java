@@ -84,16 +84,20 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
         switch (v.getId()) {
             case R.id.btn_favourite:
 
+                DbHelper dbHelper = new DbHelper(getContext(), Utils.DB_MOVIES, null, 2);
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
                 if (tempMovie.getIsFavourite() == 1) {
                     // movie is in Favourites list. Remove it from there
                     // and call tempMovie.setIsFavourite(0);
-                    Toast.makeText(getContext(), "Movie is already a favourite", Toast.LENGTH_LONG)
-                            .show();
+                    boolean result = deleteMovie(db, tempMovie);
+                    if (result) {
+                        Toast.makeText(getContext(), "Movie removed from Favourites list", Toast.LENGTH_LONG)
+                                .show();
+                        tempMovie.setIsFavourite(0);
+                    }
                 } else {
                     // movie is not in Favourites. Call tempMovie.setIsFavourite(1) and add it to
                     // database
-                    DbHelper dbHelper = new DbHelper(getContext(), Utils.DB_MOVIES, null, 2);
-                    SQLiteDatabase db = dbHelper.getWritableDatabase();
                     if (db != null) {
                         tempMovie.setIsFavourite(1);
                         ContentValues newMovieValues = new ContentValues();
@@ -105,7 +109,7 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
                         newMovieValues.put(Utils.MOVIE_RELEASE_DATE, tempMovie.getReleaseDate());
                         newMovieValues.put(Utils.MOVIE_USER_RATING, tempMovie.getUserRating());
                         newMovieValues.put(Utils.MOVIE_IS_FAVOURITE, tempMovie.getIsFavourite());
-                        Long i = db.insert("Movies", null, newMovieValues);
+                        Long i = db.insert(Utils.DB_MOVIES_TABLE_NAME, null, newMovieValues);
                         if (i > 0) {
                             Toast.makeText(getActivity(), "Movie saved in Favourites", Toast.LENGTH_SHORT).show();
                         }
@@ -117,5 +121,11 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
                 break;
         }
 
+    }
+
+    public boolean deleteMovie(SQLiteDatabase db, Movie tempMovie) {
+        boolean deleted = db.delete(Utils.DB_MOVIES_TABLE_NAME, Utils.MOVIE_ID + "=" +
+                tempMovie.getId(), null) > 0;
+        return deleted;
     }
 }
