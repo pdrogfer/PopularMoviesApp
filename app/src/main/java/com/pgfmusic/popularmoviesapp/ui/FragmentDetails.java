@@ -1,6 +1,8 @@
 package com.pgfmusic.popularmoviesapp.ui;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,6 +17,9 @@ import com.pgfmusic.popularmoviesapp.R;
 import com.pgfmusic.popularmoviesapp.Utils;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 public class FragmentDetails extends Fragment implements View.OnClickListener{
 
     ImageView iv_poster;
@@ -24,6 +29,8 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
             tv_synopsis;
     FloatingActionButton isFavourite;
     int movieID;
+
+    Context context = getActivity();
 
     public FragmentDetails() {
     }
@@ -73,6 +80,8 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
 
         switch (v.getId()) {
             case R.id.btn_favourite:
+
+                // TODO: 04/01/2016 use database to store movies
                 Snackbar.make(v, "Movie Favourite state changed from " + movieID + "to ", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
                 break;

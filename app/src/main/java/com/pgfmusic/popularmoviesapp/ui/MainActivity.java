@@ -12,6 +12,10 @@ import com.pgfmusic.popularmoviesapp.R;
 import com.pgfmusic.popularmoviesapp.Utils;
 import com.pgfmusic.popularmoviesapp.ui.FragmentMain;
 
+import org.json.JSONArray;
+
+import java.util.Set;
+
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 
@@ -32,8 +36,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         if (prefs.contains(Utils.ORDER_KEY_PREFS)) {
             Utils.SORT_ORDER = prefs.getString(Utils.ORDER_KEY_PREFS, "");
         }
-
-
     }
 
     @Override
@@ -51,5 +53,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         if (key.equals(Utils.ORDER_KEY_PREFS)) {
             Utils.SORT_ORDER = sharedPreferences.getString(key, "");
         }
+//        if (key.equals(Utils.FAVOURITES_KEY_PREFS)) {
+//            // TODO: 04/01/2016 Dont know if this is necessary
+//        }
     }
 }
