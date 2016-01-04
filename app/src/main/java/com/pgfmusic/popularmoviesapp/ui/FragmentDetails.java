@@ -23,12 +23,10 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
             tv_userRating,
             tv_synopsis;
     FloatingActionButton isFavourite;
-
-
+    int movieID;
 
     public FragmentDetails() {
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,17 +39,11 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
         tv_synopsis = (TextView) rootView.findViewById(R.id.tvDetailsSynopsis);
         isFavourite = (FloatingActionButton) rootView.findViewById(R.id.btn_favourite);
 
-        isFavourite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Snackbar.make(v, "Movie Favourite state changed", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        isFavourite.setOnClickListener(this);
 
         if (Utils.TABLET_MODE) {
             Bundle movieDetails = getArguments();
+            movieID = movieDetails.getInt(Utils.MOVIE_ID);
             iv_poster.setAdjustViewBounds(true);
             Picasso.with(getContext())
                     .load(movieDetails.getString(Utils.MOVIE_POSTER_PATH))
@@ -63,7 +55,7 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
 
         } else {
             Intent intent = getActivity().getIntent();
-            int id = intent.getIntExtra("id", 0);
+            movieID = intent.getIntExtra(Utils.MOVIE_ID, 0);
             iv_poster.setAdjustViewBounds(true);
             Picasso.with(getContext())
                     .load(intent.getStringExtra(Utils.MOVIE_POSTER_PATH))
@@ -78,6 +70,13 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.btn_favourite:
+                Snackbar.make(v, "Movie Favourite state changed from " + movieID + "to ", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+                break;
+        }
 
     }
 }
