@@ -55,7 +55,7 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
             movieDetails = getArguments();
         } else {
             Intent in = getActivity().getIntent();
-            movieDetails = in.getExtras();
+            movieDetails = in.getBundleExtra("bundle");
         }
         tempMovie = new Movie(movieDetails.getInt(Utils.MOVIE_ID),
                 movieDetails.getString(Utils.MOVIE_TITLE),
@@ -74,6 +74,7 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
         tv_releaseDate.setText("Release: " + tempMovie.getReleaseDate());
         tv_userRating.setText("Rating: " + String.valueOf(tempMovie.getUserRating()));
         tv_synopsis.setText(tempMovie.getPlotSynopsis());
+        // TODO: 04/01/16 set btnFavourite status
         return rootView;
     }
 
@@ -83,19 +84,22 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
         switch (v.getId()) {
             case R.id.btn_favourite:
 
-                DbHelper dbHelper = new DbHelper(getContext(), Utils.DB_MOVIES, null, 21);
+                // if !isFavourite, insert movie in db and set isFavourite = 1
+                // if isFavourite, delete from db and set isFavourite = 0
+
+                DbHelper dbHelper = new DbHelper(getContext(), Utils.DB_MOVIES, null, 1);
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
                 if (db != null) {
-                    ContentValues newMovie = new ContentValues();
-                    newMovie.put(Utils.MOVIE_ID, tempMovie.getId());
-                    newMovie.put(Utils.MOVIE_TITLE, tempMovie.getTitle());
-                    newMovie.put(Utils.MOVIE_ORIGINAL_TITLE, tempMovie.getOriginalTitle());
-                    newMovie.put(Utils.MOVIE_PLOT, tempMovie.getPlotSynopsis());
-                    newMovie.put(Utils.MOVIE_POSTER_PATH, tempMovie.getPoster());
-                    newMovie.put(Utils.MOVIE_RELEASE_DATE, tempMovie.getReleaseDate());
-                    newMovie.put(Utils.MOVIE_USER_RATING, tempMovie.getUserRating());
-                    newMovie.put(Utils.MOVIE_IS_FAVOURITE, tempMovie.getIsFavourite());
-                    Long i = db.insert("Movies", null, newMovie);
+                    ContentValues newMovieValues = new ContentValues();
+                    newMovieValues.put(Utils.MOVIE_ID, tempMovie.getId());
+                    newMovieValues.put(Utils.MOVIE_TITLE, tempMovie.getTitle());
+                    newMovieValues.put(Utils.MOVIE_ORIGINAL_TITLE, tempMovie.getOriginalTitle());
+                    newMovieValues.put(Utils.MOVIE_PLOT, tempMovie.getPlotSynopsis());
+                    newMovieValues.put(Utils.MOVIE_POSTER_PATH, tempMovie.getPoster());
+                    newMovieValues.put(Utils.MOVIE_RELEASE_DATE, tempMovie.getReleaseDate());
+                    newMovieValues.put(Utils.MOVIE_USER_RATING, tempMovie.getUserRating());
+                    newMovieValues.put(Utils.MOVIE_IS_FAVOURITE, tempMovie.getIsFavourite());
+                    Long i = db.insert("Movies", null, newMovieValues);
                     if (i > 0) {
                         Toast.makeText(getActivity(), "Movie saved in Favourites", Toast.LENGTH_SHORT).show();
                     }

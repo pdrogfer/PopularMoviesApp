@@ -154,16 +154,16 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
         Log.i(Utils.TAG, "Clicked item num. " + position + ". Movie title: " +
                 tempMovie.getTitle() + "User Rating: " + tempMovie.getUserRating());
 
+        Bundle movieDetails = new Bundle();
+        movieDetails.putInt(Utils.MOVIE_ID, tempMovie.getId());
+        movieDetails.putString(Utils.MOVIE_TITLE, tempMovie.getTitle());
+        movieDetails.putString(Utils.MOVIE_ORIGINAL_TITLE, tempMovie.getOriginalTitle());
+        movieDetails.putString(Utils.MOVIE_PLOT, tempMovie.getPlotSynopsis());
+        movieDetails.putString(Utils.MOVIE_POSTER_PATH, tempMovie.getPoster());
+        movieDetails.putString(Utils.MOVIE_RELEASE_DATE, tempMovie.getReleaseDate());
+        movieDetails.putDouble(Utils.MOVIE_USER_RATING, tempMovie.getUserRating());
+        movieDetails.putInt(Utils.MOVIE_IS_FAVOURITE, tempMovie.getIsFavourite());
         if (Utils.TABLET_MODE) {
-            Bundle movieDetails = new Bundle();
-            movieDetails.putInt(Utils.MOVIE_ID, tempMovie.getId());
-            movieDetails.putString(Utils.MOVIE_TITLE, tempMovie.getTitle());
-            movieDetails.putString(Utils.MOVIE_ORIGINAL_TITLE, tempMovie.getOriginalTitle());
-            movieDetails.putString(Utils.MOVIE_PLOT, tempMovie.getPlotSynopsis());
-            movieDetails.putString(Utils.MOVIE_POSTER_PATH, tempMovie.getPoster());
-            movieDetails.putString(Utils.MOVIE_RELEASE_DATE, tempMovie.getReleaseDate());
-            movieDetails.putDouble(Utils.MOVIE_USER_RATING, tempMovie.getUserRating());
-            movieDetails.putInt(Utils.MOVIE_IS_FAVOURITE, tempMovie.getIsFavourite());
             FragmentDetails fragmentDetails = new FragmentDetails();
             fragmentDetails.setArguments(movieDetails);
             getActivity().getSupportFragmentManager().beginTransaction()
@@ -171,13 +171,7 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
                     .commit();
         } else {
             Intent intent = new Intent(getActivity(), DetailsActivity.class);
-            intent.putExtra(Utils.MOVIE_ID, tempMovie.getId());
-            intent.putExtra(Utils.MOVIE_TITLE, tempMovie.getTitle());
-            intent.putExtra(Utils.MOVIE_ORIGINAL_TITLE, tempMovie.getOriginalTitle());
-            intent.putExtra(Utils.MOVIE_PLOT, tempMovie.getPlotSynopsis());
-            intent.putExtra(Utils.MOVIE_POSTER_PATH, tempMovie.getPoster());
-            intent.putExtra(Utils.MOVIE_RELEASE_DATE, tempMovie.getReleaseDate());
-            intent.putExtra(Utils.MOVIE_USER_RATING, tempMovie.getUserRating());
+            intent.putExtra("bundle", movieDetails);
             startActivity(intent);
         }
     }
