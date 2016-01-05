@@ -115,12 +115,9 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
                         }
                     }
                 }
-
-
-
+                db.close();
                 break;
         }
-
     }
 
     public boolean deleteMovie(SQLiteDatabase db, Movie tempMovie) {

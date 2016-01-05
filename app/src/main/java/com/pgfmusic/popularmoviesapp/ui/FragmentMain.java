@@ -1,6 +1,8 @@
 package com.pgfmusic.popularmoviesapp.ui;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.pgfmusic.popularmoviesapp.DbHelper;
 import com.pgfmusic.popularmoviesapp.FetchMoviesTask;
 import com.pgfmusic.popularmoviesapp.ImageAdapter;
 import com.pgfmusic.popularmoviesapp.Movie;
@@ -64,46 +67,59 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         switch (id) {
             case R.id.menu_order_popularity:
-                refreshGridView(1);
-                return true;
+                Utils.SORT_ORDER = Utils.ORDER_BY_POPULARITY;
+                movies = fetchMovies();
+                break;
             case R.id.menu_order_rating:
-                refreshGridView(2);
+            Utils.SORT_ORDER = Utils.ORDER_BY_RATINGS;
+                movies = fetchMovies();
+                break;
             case R.id.menu_favourites:
-                refreshGridView(3);
+                movies = getFavourites();
+                break;
         }
+        gridViewMovies.setAdapter(new ImageAdapter(getActivity(), movies));
         return super.onOptionsItemSelected(item);
     }
 
-    private void refreshGridView(int sortCriteria) {
-        gridViewMovies.invalidateViews();
-        if (sortCriteria == 1) {
-            Utils.SORT_ORDER = Utils.ORDER_BY_POPULARITY;
-        } else if (sortCriteria == 2) {
-            Utils.SORT_ORDER = Utils.ORDER_BY_RATINGS;
-        } else if (sortCriteria == 3) {
-            /* TODO: 29/12/2015 retrieve favourites list from database/shared prefs and populate
-            * 'movies' before calling 'gridViewMovies.setAdapter'
-            * directly, no need to call FetchMoviesTask
-            */
-
-
+    private ArrayList<Movie> getFavourites() {
+        ArrayList<Movie> tempFavourites = new ArrayList<>();
+        DbHelper dbHelper = new DbHelper(getContext(), Utils.DB_MOVIES, null, 2);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + Utils.DB_MOVIES_TABLE_NAME;
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c.moveToFirst()) {
+            do {
+                Movie tempMovie = new Movie();
+                tempMovie.setId(c.getInt(c.getColumnIndex(Utils.MOVIE_ID)));
+                tempMovie.setTitle(c.getString(c.getColumnIndex(Utils.MOVIE_TITLE)));
+                tempMovie.setOriginalTitle(c.getString(c.getColumnIndex(Utils.MOVIE_ORIGINAL_TITLE)));
+                tempMovie.setPlotSynopsis(c.getString(c.getColumnIndex(Utils.MOVIE_PLOT)));
+                tempMovie.setPoster(c.getString(c.getColumnIndex(Utils.MOVIE_POSTER_PATH)));
+                tempMovie.setReleaseDate(c.getString(c.getColumnIndex(Utils.MOVIE_RELEASE_DATE)));
+                tempMovie.setUserRating(c.getDouble(c.getColumnIndex(Utils.MOVIE_USER_RATING)));
+                tempMovie.setIsFavourite(c.getInt(c.getColumnIndex(Utils.MOVIE_IS_FAVOURITE)));
+                tempFavourites.add(tempMovie);
+            } while (c.moveToNext());
         }
+        return tempFavourites;
+    }
 
+    private ArrayList<Movie> fetchMovies() {
         strUrl = buildURL();
+        ArrayList<Movie> tempMovies = null;
         FetchMoviesTask fetchMoviesTask = new FetchMoviesTask();
-        movies = null;
         try {
-            movies = fetchMoviesTask.execute(strUrl).get();
+            tempMovies = fetchMoviesTask.execute(strUrl).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
             Log.i(Utils.TAG, "No Movies Added");
         }
-        gridViewMovies.setAdapter(new ImageAdapter(getActivity(), movies));
+        return tempMovies;
     }
 
     @Override
