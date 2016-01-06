@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +18,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.pgfmusic.popularmoviesapp.DbHelper;
+import com.pgfmusic.popularmoviesapp.FetchTrailers;
 import com.pgfmusic.popularmoviesapp.Movie;
 import com.pgfmusic.popularmoviesapp.R;
 import com.pgfmusic.popularmoviesapp.Utils;
@@ -24,6 +31,11 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+
+import cz.msebera.android.httpclient.Header;
 
 public class FragmentDetails extends Fragment implements View.OnClickListener{
 
@@ -75,7 +87,70 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
         tv_userRating.setText("Rating: " + String.valueOf(tempMovie.getUserRating()));
         tv_synopsis.setText(tempMovie.getPlotSynopsis());
         // TODO: 04/01/16 set btnFavourite status
+
+        getTrailers();
+        getReviews();
+
+
         return rootView;
+    }
+
+    private void getReviews() {
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("http")
+                .authority("api.themoviedb.org")
+                .appendPath("3")
+                .appendPath("movie")
+                .appendPath("286217") //movie ID, insert it as variable
+                .appendPath("reviews")
+                .appendQueryParameter("api_key", Utils.TMDB_API_KEY);
+        String trailerURL = builder.toString();
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(trailerURL, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                try {
+                    Log.i(Utils.TAG, "Reviews OK: " + new String(responseBody, "UTF-8"));
+                } catch (UnsupportedEncodingException e) {
+                    Log.i(Utils.TAG, "Reviewss ERROR: " + e.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.i(Utils.TAG, "Reviews ERROR onFailure: " + error.toString());
+            }
+        });
+    }
+
+    private void getTrailers()  {
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("http")
+                .authority("api.themoviedb.org")
+                .appendPath("3")
+                .appendPath("movie")
+                .appendPath("286217") //movie ID, insert it as variable
+                .appendPath("videos")
+                .appendQueryParameter("api_key", Utils.TMDB_API_KEY);
+        String trailerURL = builder.toString();
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(trailerURL, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                try {
+                    Log.i(Utils.TAG, "Trailer OK: " + new String(responseBody, "UTF-8"));
+                } catch (UnsupportedEncodingException e) {
+                    Log.i(Utils.TAG, "Trailers ERROR: " + e.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                    Log.i(Utils.TAG, "Trailers ERROR onFailure: " + error.toString());
+            }
+        });
     }
 
     @Override
