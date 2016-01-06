@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +36,7 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
             tv_userRating,
             tv_synopsis;
     FloatingActionButton isFavourite;
+    Button btn_trailer;
     Movie tempMovie;
     Bundle movieDetails;
 
@@ -51,7 +53,9 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
         tv_userRating = (TextView) rootView.findViewById(R.id.tvDetailsUserRating);
         tv_synopsis = (TextView) rootView.findViewById(R.id.tvDetailsSynopsis);
         isFavourite = (FloatingActionButton) rootView.findViewById(R.id.btn_favourite);
+        btn_trailer = (Button) rootView.findViewById(R.id.btn_trailer);
         isFavourite.setOnClickListener(this);
+        btn_trailer.setOnClickListener(this);
 
         if (Utils.TABLET_MODE) {
             movieDetails = getArguments();
@@ -181,6 +185,11 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
                     }
                 }
                 db.close();
+                break;
+
+            case R.id.btn_trailer:
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + "8E8N8EKbpV4"));
+                startActivity(intent);
                 break;
         }
     }
