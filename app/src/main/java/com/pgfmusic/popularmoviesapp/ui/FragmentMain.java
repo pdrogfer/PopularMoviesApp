@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,24 +21,8 @@ import com.pgfmusic.popularmoviesapp.ImageAdapter;
 import com.pgfmusic.popularmoviesapp.Movie;
 import com.pgfmusic.popularmoviesapp.R;
 import com.pgfmusic.popularmoviesapp.Utils;
-import com.pgfmusic.popularmoviesapp.ui.DetailsActivity;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 public class FragmentMain extends android.support.v4.app.Fragment implements
@@ -98,6 +80,7 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
                 tempMovie.setOriginalTitle(c.getString(c.getColumnIndex(Utils.MOVIE_ORIGINAL_TITLE)));
                 tempMovie.setPlotSynopsis(c.getString(c.getColumnIndex(Utils.MOVIE_PLOT)));
                 tempMovie.setPoster(c.getString(c.getColumnIndex(Utils.MOVIE_POSTER_PATH)));
+                tempMovie.setBackdrop(c.getString(c.getColumnIndex(Utils.MOVIE_BACKDROP_PATH)));
                 tempMovie.setReleaseDate(c.getString(c.getColumnIndex(Utils.MOVIE_RELEASE_DATE)));
                 tempMovie.setUserRating(c.getDouble(c.getColumnIndex(Utils.MOVIE_USER_RATING)));
                 tempMovie.setIsFavourite(c.getInt(c.getColumnIndex(Utils.MOVIE_IS_FAVOURITE)));
@@ -108,7 +91,7 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
     }
 
     private ArrayList<Movie> fetchMovies() {
-        strUrl = buildURL();
+        strUrl = buildUrlDiscover();
         ArrayList<Movie> tempMovies = null;
         FetchMoviesTask fetchMoviesTask = new FetchMoviesTask();
         try {
@@ -125,7 +108,7 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        strUrl = buildURL();
+        strUrl = buildUrlDiscover();
         FetchMoviesTask fetchMoviesTask = new FetchMoviesTask();
         movies = null;
         try {
@@ -150,7 +133,7 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
         return rootView;
     }
 
-    private String buildURL() {
+    private String buildUrlDiscover() {
         Uri.Builder builder = new Uri.Builder();
         builder.scheme("http")
                 .authority("api.themoviedb.org")
@@ -176,6 +159,7 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
         movieDetails.putString(Utils.MOVIE_ORIGINAL_TITLE, tempMovie.getOriginalTitle());
         movieDetails.putString(Utils.MOVIE_PLOT, tempMovie.getPlotSynopsis());
         movieDetails.putString(Utils.MOVIE_POSTER_PATH, tempMovie.getPoster());
+        movieDetails.putString(Utils.MOVIE_BACKDROP_PATH, tempMovie.getBackdrop());
         movieDetails.putString(Utils.MOVIE_RELEASE_DATE, tempMovie.getReleaseDate());
         movieDetails.putDouble(Utils.MOVIE_USER_RATING, tempMovie.getUserRating());
         movieDetails.putInt(Utils.MOVIE_IS_FAVOURITE, tempMovie.getIsFavourite());

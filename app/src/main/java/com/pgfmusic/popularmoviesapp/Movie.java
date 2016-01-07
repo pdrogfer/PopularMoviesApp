@@ -12,6 +12,7 @@ public class Movie implements Parcelable {
     String originalTitle;
     String plotSynopsis;
     String poster;
+    String backdrop;
     String releaseDate; // TODO: Change format to Date
     double userRating;
     int isFavourite; // stores the favourite state of a movie, 0 = not, 1 = yes
@@ -19,12 +20,13 @@ public class Movie implements Parcelable {
     ArrayList<String> reviews; // created by setter, in details view. Not in constructor
 
     public Movie(int id, String title, String originalTitle, String plotSynopsis, String poster,
-                 String releaseDate, double userRating, int isFavourite) {
+                 String backdrop, String releaseDate, double userRating, int isFavourite) {
         this.id = id;
         this.title = title;
         this.originalTitle = originalTitle;
         this.plotSynopsis = plotSynopsis;
         this.poster = poster;
+        this.backdrop = backdrop;
         this.releaseDate = releaseDate;
         this.userRating = userRating;
         this.isFavourite = isFavourite;
@@ -39,6 +41,7 @@ public class Movie implements Parcelable {
         originalTitle = in.readString();
         plotSynopsis = in.readString();
         poster = in.readString();
+        backdrop = in.readString();
         releaseDate = in.readString();
         userRating = in.readDouble();
         isFavourite = in.readInt();
@@ -73,6 +76,7 @@ public class Movie implements Parcelable {
         dest.writeString(originalTitle);
         dest.writeString(plotSynopsis);
         dest.writeString(poster);
+        dest.writeString(backdrop);
         dest.writeString(releaseDate);
         dest.writeDouble(userRating);
         dest.writeInt(isFavourite);
@@ -92,6 +96,14 @@ public class Movie implements Parcelable {
 
     public void setPoster(String poster) {
         this.poster = poster;
+    }
+
+    public String getBackdrop() {
+        return backdrop;
+    }
+
+    public void setBackdrop(String backdrop) {
+        this.backdrop = backdrop;
     }
 
     public String getTitle() {

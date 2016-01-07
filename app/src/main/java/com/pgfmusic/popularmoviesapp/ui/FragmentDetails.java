@@ -37,7 +37,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class FragmentDetails extends Fragment implements View.OnClickListener{
 
-    ImageView iv_poster;
+    ImageView iv_backdrop;
     TextView tv_titleOriginal,
             tv_releaseDate,
             tv_userRating,
@@ -59,7 +59,7 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_details, container, false);
-        iv_poster = (ImageView) rootView.findViewById(R.id.ivDetailsPoster);
+        iv_backdrop = (ImageView) rootView.findViewById(R.id.ivDetailsBackdrop);
         tv_titleOriginal = (TextView) rootView.findViewById(R.id.tvDetailsTitle);
         tv_releaseDate = (TextView) rootView.findViewById(R.id.tvDetailsReleaseDate);
         tv_userRating = (TextView) rootView.findViewById(R.id.tvDetailsUserRating);
@@ -84,14 +84,15 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
                 movieDetails.getString(Utils.MOVIE_ORIGINAL_TITLE),
                 movieDetails.getString(Utils.MOVIE_PLOT),
                 movieDetails.getString(Utils.MOVIE_POSTER_PATH),
+                movieDetails.getString(Utils.MOVIE_BACKDROP_PATH),
                 movieDetails.getString(Utils.MOVIE_RELEASE_DATE),
                 movieDetails.getDouble(Utils.MOVIE_USER_RATING),
                 movieDetails.getInt(Utils.MOVIE_IS_FAVOURITE));
 
-        iv_poster.setAdjustViewBounds(true);
+        iv_backdrop.setAdjustViewBounds(true);
         Picasso.with(getContext())
-                .load(tempMovie.getPoster())
-                .into(iv_poster);
+                .load(tempMovie.getBackdrop())
+                .into(iv_backdrop);
         tv_titleOriginal.setText(tempMovie.getOriginalTitle());
         tv_releaseDate.setText("Release: " + tempMovie.getReleaseDate());
         tv_userRating.setText("Rating: " + String.valueOf(tempMovie.getUserRating()));
@@ -134,13 +135,18 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
                     String tag_content = "content";
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray jsonArray = jsonObject.getJSONArray(tag_results);
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonReview = jsonArray.getJSONObject(i);
-                        String reviewAuthor = jsonReview.getString(tag_author);
-                        Log.i(Utils.TAG, "Author: " + reviewAuthor);
-                        String reviewContent = jsonReview.getString(tag_content);
-                        Log.i(Utils.TAG, "Content: " + reviewContent);
-                        tempMovie.addReview(reviewAuthor + ": " + reviewContent);
+                    if (jsonArray.length() > 0) {
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonReview = jsonArray.getJSONObject(i);
+                            String reviewAuthor = jsonReview.getString(tag_author);
+                            Log.i(Utils.TAG, "Author: " + reviewAuthor);
+                            String reviewContent = jsonReview.getString(tag_content);
+                            Log.i(Utils.TAG, "Content: " + reviewContent);
+                            tempMovie.addReview(reviewAuthor + ": " + reviewContent);
+                        }
+                    } else {
+                        // TODO: 07/01/2016 this does not work
+                        Toast.makeText(getActivity(), "No reviews found for this movie", Toast.LENGTH_SHORT);
                     }
                 } catch (UnsupportedEncodingException e) {
                     Log.i(Utils.TAG, "Reviews ERROR: " + e.toString());

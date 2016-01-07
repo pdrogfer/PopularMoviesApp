@@ -77,6 +77,7 @@ public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
         String tag_originalTitle = "original_title";
         String tag_plot = "overview";
         String tag_posterPath = "poster_path";
+        String tag_backdropPath = "backdrop_path";
         String tag_releaseDate = "release_date";
         String tag_userRating = "vote_average";
         ArrayList<Movie> movies = new ArrayList<>();
@@ -95,12 +96,15 @@ public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
                 String posterPath = Utils.TMDB_BASE_URL +
                         Utils.POSTER_SIZE +
                         movie.getString(tag_posterPath);
+                String backdropPath = Utils.TMDB_BASE_URL +
+                        Utils.BACKDROP_SIZE +
+                        movie.getString(tag_backdropPath);
                 String releaseDate = movie.getString(tag_releaseDate);
                 int userRating = movie.getInt(tag_userRating);
                 int isFavourite = 0;
 
                 movies.add(new Movie(movieID, movieTitle, originalTitle, plot, posterPath,
-                        releaseDate, userRating, isFavourite));
+                        backdropPath, releaseDate, userRating, isFavourite));
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -13,6 +13,7 @@ public class Utils {
     public static final String APP_PREFERENCES = "app__prefs";
 
     public static final String POSTER_SIZE = "w342/";
+    public static final String BACKDROP_SIZE = "w500/";
     public static final String DB_MOVIES = "DB_FAVOURITE_MOVIES";
     public static final String DB_MOVIES_TABLE_NAME = "Movies";
     public static final String YOUTUBE_BASE_URL = "http://www.youtube.com/watch?v=";
@@ -34,6 +35,7 @@ public class Utils {
     public static final String MOVIE_ORIGINAL_TITLE = "original_title";
     public static final String MOVIE_PLOT = "plot";
     public static final String MOVIE_POSTER_PATH = "poster_path";
+    public static final String MOVIE_BACKDROP_PATH = "backdrop_path";
     public static final String MOVIE_RELEASE_DATE = "release_date";
     public static final String MOVIE_USER_RATING = "user_rating";
     public static final String MOVIE_IS_FAVOURITE = "is_favourite";
