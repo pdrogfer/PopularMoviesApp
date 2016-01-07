@@ -4,9 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<RelativeLayout
+<LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <ImageView
         android:layout_width="fill_parent"
@@ -22,7 +23,7 @@
         android:id="@+id/btn_favourite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_gravity="end"
         android:layout_margin="16dp"
         android:elevation="2dp"
         android:onClick="addToFavourites"
@@ -34,9 +35,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Original Title"
         android:id="@+id/tvDetailsTitle"
-        android:paddingTop="16dp"
-        android:layout_below="@id/ivDetailsPoster"
-        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
         android:gravity="center"
         android:textSize="@dimen/abc_text_size_display_1_material"
         android:textStyle="bold" />
@@ -45,12 +44,9 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvDetailsTitle"
         android:id="@+id/rowDetails"
         android:paddingTop="16dp"
-        android:paddingBottom="16dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:paddingBottom="16dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -81,7 +77,6 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:id="@+id/tvDetailsSynopsis"
-        android:layout_below="@+id/rowDetails"
         android:textSize="@dimen/abc_text_size_body_1_material" />
 
     <Button
@@ -90,7 +85,6 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:id="@+id/btn_trailer"
-        android:layout_below="@id/tvDetailsSynopsis"
         android:text="Watch Trailer" />
     <Button
         android:layout_width="match_parent"
@@ -98,14 +92,12 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:id="@+id/btn_reviews"
-        android:layout_below="@id/btn_trailer"
         android:text="Read Reviews" />
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/lv_reviews"
-        android:layout_below="@id/btn_reviews" />
-</RelativeLayout>
+        android:layout_height="200dp"
+        android:id="@+id/lv_reviews" />
+</LinearLayout>
 
 </ScrollView>

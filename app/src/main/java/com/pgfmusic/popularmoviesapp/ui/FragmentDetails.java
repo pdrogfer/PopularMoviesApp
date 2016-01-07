@@ -100,9 +100,7 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
 
         getTrailers(tempMovie.getId());
 
-        String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-                "Linux", "OS/2" };
+        String[] values = new String[]{};
         final ArrayList<String> list = new ArrayList<>();
         for (int i = 0; i < values.length; i++) {
             list.add(values[i]);
@@ -142,7 +140,7 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
                         Log.i(Utils.TAG, "Author: " + reviewAuthor);
                         String reviewContent = jsonReview.getString(tag_content);
                         Log.i(Utils.TAG, "Content: " + reviewContent);
-                        tempMovie.addReview(reviewAuthor);
+                        tempMovie.addReview(reviewAuthor + ": " + reviewContent);
                     }
                 } catch (UnsupportedEncodingException e) {
                     Log.i(Utils.TAG, "Reviews ERROR: " + e.toString());
