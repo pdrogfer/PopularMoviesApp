@@ -10,7 +10,7 @@
 
     <ImageView
         android:layout_width="fill_parent"
-        android:layout_height="420sp"
+        android:layout_height="220sp"
         android:id="@+id/ivDetailsPoster"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -92,6 +92,12 @@
         android:id="@+id/btn_trailer"
         android:layout_below="@id/tvDetailsSynopsis"
         android:text="Watch Trailer" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lv_reviews"
+        android:layout_below="@id/btn_trailer"/>
 </RelativeLayout>
 
 </ScrollView>

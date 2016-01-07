@@ -11,8 +11,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,10 +23,16 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.pgfmusic.popularmoviesapp.DbHelper;
 import com.pgfmusic.popularmoviesapp.Movie;
 import com.pgfmusic.popularmoviesapp.R;
+import com.pgfmusic.popularmoviesapp.Review;
 import com.pgfmusic.popularmoviesapp.Utils;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -37,8 +45,11 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
             tv_synopsis;
     FloatingActionButton isFavourite;
     Button btn_trailer;
+    ListView lv_reviews;
     Movie tempMovie;
     Bundle movieDetails;
+
+    ArrayList<Review> movieReviews;
 
     public FragmentDetails() {
     }
@@ -54,6 +65,8 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
         tv_synopsis = (TextView) rootView.findViewById(R.id.tvDetailsSynopsis);
         isFavourite = (FloatingActionButton) rootView.findViewById(R.id.btn_favourite);
         btn_trailer = (Button) rootView.findViewById(R.id.btn_trailer);
+        lv_reviews = (ListView) rootView.findViewById(R.id.lv_reviews);
+
         isFavourite.setOnClickListener(this);
         btn_trailer.setOnClickListener(this);
 
@@ -83,19 +96,29 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
         // TODO: 04/01/16 set btnFavourite status
 
         getTrailers();
-        getReviews();
+
+        // getReviews(tempMovie.getId());
+        String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
+                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
+                "Linux", "OS/2" };
+        final ArrayList<String> list = new ArrayList<>();
+        for (int i = 0; i < values.length; i++) {
+            list.add(values[i]);
+        }
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
+        lv_reviews.setAdapter(adapter);
 
 
         return rootView;
     }
 
-    private void getReviews() {
+    private void getReviews(int id) {
         Uri.Builder builder = new Uri.Builder();
         builder.scheme("http")
                 .authority("api.themoviedb.org")
                 .appendPath("3")
                 .appendPath("movie")
-                .appendPath("286217") //movie ID, insert it as variable
+                .appendPath(String.valueOf(id)) //movie ID, insert it as variable
                 .appendPath("reviews")
                 .appendQueryParameter("api_key", Utils.TMDB_API_KEY);
         String trailerURL = builder.toString();
@@ -105,9 +128,26 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 try {
-                    Log.i(Utils.TAG, "Reviews OK: " + new String(responseBody, "UTF-8"));
+                    String response = new String(responseBody, "UTF-8");
+                    Log.i(Utils.TAG, "Reviews OK: " + response);
+                    String tag_results = "results";
+                    String tag_author = "author";
+                    String tag_content = "content";
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = jsonObject.getJSONArray(tag_results);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonReview = jsonArray.getJSONObject(i);
+                        String reviewAuthor = jsonReview.getString(tag_author);
+                        Log.i(Utils.TAG, "Author: " + reviewAuthor);
+                        //String reviewContent = jsonReview.getString(tag_content);
+                        //Log.i(Utils.TAG, "Content: " + reviewContent);
+                        movieReviews.add(new Review(reviewAuthor, "")); //reviewContent));
+                    }
                 } catch (UnsupportedEncodingException e) {
-                    Log.i(Utils.TAG, "Reviewss ERROR: " + e.toString());
+                    Log.i(Utils.TAG, "Reviews ERROR: " + e.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.i(Utils.TAG, "Reviews Json ERROR: " + e.toString());
                 }
             }
 
