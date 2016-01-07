@@ -13,6 +13,7 @@ public class Movie implements Parcelable {
     String releaseDate; // TODO: Change format to Date
     double userRating;
     int isFavourite; // stores the favourite state of a movie, 0 = not, 1 = yes
+    String trailerKey; // created by setter, in details view. Not in constructor
 
     public Movie(int id, String title, String originalTitle, String plotSynopsis, String poster,
                  String releaseDate, double userRating, int isFavourite) {
@@ -135,5 +136,13 @@ public class Movie implements Parcelable {
     // change Favourite state of a movie, 0 = false, 1 = true
     public void setIsFavourite(int isFavourite) {
         this.isFavourite = isFavourite;
+    }
+
+    public String getTrailerKey() {
+        return trailerKey;
+    }
+
+    public void setTrailerKey(String trailerKey) {
+        this.trailerKey = trailerKey;
     }
 }

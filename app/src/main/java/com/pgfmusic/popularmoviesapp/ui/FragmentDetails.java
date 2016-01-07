@@ -95,7 +95,7 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
         tv_synopsis.setText(tempMovie.getPlotSynopsis());
         // TODO: 04/01/16 set btnFavourite status
 
-        getTrailers();
+        getTrailers(tempMovie.getId());
 
         // getReviews(tempMovie.getId());
         String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
@@ -158,13 +158,14 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
         });
     }
 
-    private void getTrailers()  {
+    private void getTrailers(int id)  {
+        String key;
         Uri.Builder builder = new Uri.Builder();
         builder.scheme("http")
                 .authority("api.themoviedb.org")
                 .appendPath("3")
                 .appendPath("movie")
-                .appendPath("286217") //movie ID, insert it as variable
+                .appendPath(String.valueOf(id)) //movie ID, insert it as variable
                 .appendPath("videos")
                 .appendQueryParameter("api_key", Utils.TMDB_API_KEY);
         String trailerURL = builder.toString();
@@ -174,9 +175,23 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 try {
+                    String response = new String(responseBody, "UTF-8");
                     Log.i(Utils.TAG, "Trailer OK: " + new String(responseBody, "UTF-8"));
+                    String tag_results = "results";
+                    String tag_key = "key";
+                    String tag_site = "site";
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = jsonObject.getJSONArray(tag_results);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonTrailer = jsonArray.getJSONObject(i);
+                        if (jsonTrailer.getString(tag_site).equals("YouTube")) {
+                            tempMovie.setTrailerKey(jsonTrailer.getString(tag_key));
+                        }
+                    }
                 } catch (UnsupportedEncodingException e) {
                     Log.i(Utils.TAG, "Trailers ERROR: " + e.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
 
@@ -228,7 +243,7 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.btn_trailer:
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + "8E8N8EKbpV4"));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Utils.YOUTUBE_BASE_URL + tempMovie.getTrailerKey()));
                 startActivity(intent);
                 break;
         }
