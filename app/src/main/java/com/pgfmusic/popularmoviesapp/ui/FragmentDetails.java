@@ -236,6 +236,7 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
                         newMovieValues.put(Utils.MOVIE_ORIGINAL_TITLE, tempMovie.getOriginalTitle());
                         newMovieValues.put(Utils.MOVIE_PLOT, tempMovie.getPlotSynopsis());
                         newMovieValues.put(Utils.MOVIE_POSTER_PATH, tempMovie.getPoster());
+                        newMovieValues.put(Utils.MOVIE_BACKDROP_PATH, tempMovie.getBackdrop());
                         newMovieValues.put(Utils.MOVIE_RELEASE_DATE, tempMovie.getReleaseDate());
                         newMovieValues.put(Utils.MOVIE_USER_RATING, tempMovie.getUserRating());
                         newMovieValues.put(Utils.MOVIE_IS_FAVOURITE, tempMovie.getIsFavourite());

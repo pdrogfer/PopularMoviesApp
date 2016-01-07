@@ -15,6 +15,7 @@ public class DbHelper extends SQLiteOpenHelper {
                     "original_title TEXT NOT NULL, " +
                     "plot TEXT NOT NULL, " +
                     "poster_path TEXT NOT NULL, " +
+                    "backdrop_path TEXT NOT NULL, " +
                     "release_date TEXT NOT NULL, " +
                     "user_rating DOUBLE NOT NULL, " +
                     "is_favourite INTEGER NOT NULL)";
