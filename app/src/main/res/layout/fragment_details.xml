@@ -92,12 +92,20 @@
         android:id="@+id/btn_trailer"
         android:layout_below="@id/tvDetailsSynopsis"
         android:text="Watch Trailer" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:id="@+id/btn_reviews"
+        android:layout_below="@id/btn_trailer"
+        android:text="Read Reviews" />
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/lv_reviews"
-        android:layout_below="@id/btn_trailer"/>
+        android:layout_below="@id/btn_reviews" />
 </RelativeLayout>
 
 </ScrollView>

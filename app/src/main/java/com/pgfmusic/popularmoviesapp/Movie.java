@@ -3,6 +3,8 @@ package com.pgfmusic.popularmoviesapp;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 public class Movie implements Parcelable {
 
     int id;
@@ -14,6 +16,7 @@ public class Movie implements Parcelable {
     double userRating;
     int isFavourite; // stores the favourite state of a movie, 0 = not, 1 = yes
     String trailerKey; // created by setter, in details view. Not in constructor
+    ArrayList<String> reviews; // created by setter, in details view. Not in constructor
 
     public Movie(int id, String title, String originalTitle, String plotSynopsis, String poster,
                  String releaseDate, double userRating, int isFavourite) {
@@ -25,6 +28,8 @@ public class Movie implements Parcelable {
         this.releaseDate = releaseDate;
         this.userRating = userRating;
         this.isFavourite = isFavourite;
+        trailerKey = "";
+        reviews = new ArrayList<>();
     }
 
     protected Movie(Parcel in) {
@@ -144,5 +149,17 @@ public class Movie implements Parcelable {
 
     public void setTrailerKey(String trailerKey) {
         this.trailerKey = trailerKey;
+    }
+
+    public ArrayList<String> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(ArrayList<String> reviews) {
+        this.reviews = reviews;
+    }
+
+    public void addReview(String review) {
+        reviews.add(review);
     }
 }

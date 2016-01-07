@@ -23,7 +23,6 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.pgfmusic.popularmoviesapp.DbHelper;
 import com.pgfmusic.popularmoviesapp.Movie;
 import com.pgfmusic.popularmoviesapp.R;
-import com.pgfmusic.popularmoviesapp.Review;
 import com.pgfmusic.popularmoviesapp.Utils;
 import com.squareup.picasso.Picasso;
 
@@ -45,11 +44,13 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
             tv_synopsis;
     FloatingActionButton isFavourite;
     Button btn_trailer;
+    Button btn_reviews;
     ListView lv_reviews;
     Movie tempMovie;
     Bundle movieDetails;
+    ArrayAdapter<String> adapterReviews;
 
-    ArrayList<Review> movieReviews;
+
 
     public FragmentDetails() {
     }
@@ -65,10 +66,12 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
         tv_synopsis = (TextView) rootView.findViewById(R.id.tvDetailsSynopsis);
         isFavourite = (FloatingActionButton) rootView.findViewById(R.id.btn_favourite);
         btn_trailer = (Button) rootView.findViewById(R.id.btn_trailer);
+        btn_reviews = (Button) rootView.findViewById(R.id.btn_reviews);
         lv_reviews = (ListView) rootView.findViewById(R.id.lv_reviews);
 
         isFavourite.setOnClickListener(this);
         btn_trailer.setOnClickListener(this);
+        btn_reviews.setOnClickListener(this);
 
         if (Utils.TABLET_MODE) {
             movieDetails = getArguments();
@@ -97,7 +100,6 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
 
         getTrailers(tempMovie.getId());
 
-        // getReviews(tempMovie.getId());
         String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
                 "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
                 "Linux", "OS/2" };
@@ -105,14 +107,13 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
         for (int i = 0; i < values.length; i++) {
             list.add(values[i]);
         }
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
-        lv_reviews.setAdapter(adapter);
-
-
+        ArrayList<String> reviewsss = getMovieReviews(tempMovie.getId());
+        adapterReviews = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
+        lv_reviews.setAdapter(adapterReviews);
         return rootView;
     }
 
-    private void getReviews(int id) {
+    private ArrayList<String> getMovieReviews(int id) {
         Uri.Builder builder = new Uri.Builder();
         builder.scheme("http")
                 .authority("api.themoviedb.org")
@@ -139,9 +140,9 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
                         JSONObject jsonReview = jsonArray.getJSONObject(i);
                         String reviewAuthor = jsonReview.getString(tag_author);
                         Log.i(Utils.TAG, "Author: " + reviewAuthor);
-                        //String reviewContent = jsonReview.getString(tag_content);
-                        //Log.i(Utils.TAG, "Content: " + reviewContent);
-                        movieReviews.add(new Review(reviewAuthor, "")); //reviewContent));
+                        String reviewContent = jsonReview.getString(tag_content);
+                        Log.i(Utils.TAG, "Content: " + reviewContent);
+                        tempMovie.addReview(reviewAuthor);
                     }
                 } catch (UnsupportedEncodingException e) {
                     Log.i(Utils.TAG, "Reviews ERROR: " + e.toString());
@@ -156,6 +157,7 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
                 Log.i(Utils.TAG, "Reviews ERROR onFailure: " + error.toString());
             }
         });
+        return tempMovie.getReviews();
     }
 
     private void getTrailers(int id)  {
@@ -246,6 +248,10 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Utils.YOUTUBE_BASE_URL + tempMovie.getTrailerKey()));
                 startActivity(intent);
                 break;
+            case R.id.btn_reviews:
+                adapterReviews.clear();
+                adapterReviews.addAll(tempMovie.getReviews());
+                adapterReviews.notifyDataSetChanged();
         }
     }
 
