@@ -138,7 +138,7 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
                     if (jsonArray.length() > 0) {
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonReview = jsonArray.getJSONObject(i);
-                            String reviewAuthor = jsonReview.getString(tag_author);
+                            String reviewAuthor = jsonReview.getString(tag_author).toUpperCase();
                             Log.i(Utils.TAG, "Author: " + reviewAuthor);
                             String reviewContent = jsonReview.getString(tag_content);
                             Log.i(Utils.TAG, "Content: " + reviewContent);
