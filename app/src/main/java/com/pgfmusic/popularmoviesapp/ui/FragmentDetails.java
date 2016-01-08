@@ -42,7 +42,7 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
             tv_releaseDate,
             tv_userRating,
             tv_synopsis;
-    FloatingActionButton isFavourite;
+    FloatingActionButton btnIsFavourite;
     Button btn_trailer;
     Button btn_reviews;
     ListView lv_reviews;
@@ -64,12 +64,12 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
         tv_releaseDate = (TextView) rootView.findViewById(R.id.tvDetailsReleaseDate);
         tv_userRating = (TextView) rootView.findViewById(R.id.tvDetailsUserRating);
         tv_synopsis = (TextView) rootView.findViewById(R.id.tvDetailsSynopsis);
-        isFavourite = (FloatingActionButton) rootView.findViewById(R.id.btn_favourite);
+        btnIsFavourite = (FloatingActionButton) rootView.findViewById(R.id.btn_favourite);
         btn_trailer = (Button) rootView.findViewById(R.id.btn_trailer);
         btn_reviews = (Button) rootView.findViewById(R.id.btn_reviews);
         lv_reviews = (ListView) rootView.findViewById(R.id.lv_reviews);
 
-        isFavourite.setOnClickListener(this);
+        btnIsFavourite.setOnClickListener(this);
         btn_trailer.setOnClickListener(this);
         btn_reviews.setOnClickListener(this);
 
