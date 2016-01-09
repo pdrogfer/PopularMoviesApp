@@ -18,7 +18,7 @@ public class Utils {
     public static final String DB_MOVIES_TABLE_NAME = "Movies";
     public static final String YOUTUBE_BASE_URL = "http://www.youtube.com/watch?v=";
     // Go to http://themoviedb.org/, get your own API Key and put it here
-    public static String TMDB_API_KEY = "760291b7d6ef49594dc98e76ca41fb2d";
+    public static String TMDB_API_KEY = "";
 
     public static final String FAVOURITES_KEY_PREFS = "favourites_list";
     public static final String ORDER_KEY_PREFS = "order_movies_key";

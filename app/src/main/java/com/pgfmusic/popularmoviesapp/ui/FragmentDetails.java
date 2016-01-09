@@ -50,8 +50,6 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
     Bundle movieDetails;
     ArrayAdapter<String> adapterReviews;
 
-
-
     public FragmentDetails() {
     }
 
@@ -97,7 +95,6 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
         tv_releaseDate.setText("Release: " + tempMovie.getReleaseDate());
         tv_userRating.setText("Rating: " + String.valueOf(tempMovie.getUserRating()));
         tv_synopsis.setText(tempMovie.getPlotSynopsis());
-        // TODO: 04/01/16 set btnFavourite status
 
         getTrailers(tempMovie.getId());
 
