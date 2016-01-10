@@ -47,8 +47,6 @@ public class ImageAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
-        // TODO add placeholders and error iv_poster
-
         Picasso.with(mContext)
                 .load(movies.get(position).getPoster())
                 .placeholder(R.drawable.placeholder)

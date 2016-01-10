@@ -1,6 +1,17 @@
 <resources>
-    <string name="app_name">PopularMoviesApp</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_singleitem_list">Items</string>
-    <string name="title_singleitem_detail">SingleItem Detail</string>
+    <string name="app_name" translatable="false">PopularMoviesApp</string>
+    <string name="action_settings" translatable="false">Settings</string>
+    <string name="title_singleitem_list" translatable="false">Items</string>
+    <string name="title_singleitem_detail" translatable="false">SingleItem Detail</string>
+    <string name="app_title">Mi Cartelera</string>
+    <string name="release_date">Release:</string>
+    <string name="user_rating">Rating:</string>
+    <string name="watch_trailer">Watch Trailer</string>
+    <string name="read_reviews">Read Reviews</string>
+    <string name="order_by_popularity">Order by Popularity</string>
+    <string name="order_by_rating">Order by Rating</string>
+    <string name="see_favourite_movies">See Favourite Movies</string>
+    <string name="removed_from_favourites">Movie removed from Favourites list</string>
+    <string name="saved_to_favourites">Movie saved in Favourites</string>
+    <string name="favourites_empty">You have not added movies to favourites yet</string>
 </resources>

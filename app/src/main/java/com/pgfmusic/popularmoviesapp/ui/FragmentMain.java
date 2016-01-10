@@ -62,7 +62,7 @@ public class FragmentMain extends android.support.v4.app.Fragment implements
             case R.id.menu_favourites:
                 movies = getFavourites();
                 if (movies.size() == 0) {
-                    Toast.makeText(getContext(), "You have not added movies to favourites yet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.favourites_empty), Toast.LENGTH_SHORT).show();
                 }
                 break;
         }

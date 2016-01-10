@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PopularMoviesApp</string>
+    <string name="app_title">Mi Cartelera</string>
+    <string name="favourites_empty">Aun no tienes peliculas en Favoritos</string>
+    <string name="order_by_popularity">Ordenar por Popularidad</string>
+    <string name="order_by_rating">Ordenar por Puntuacion</string>
+    <string name="read_reviews">Leer Criticas</string>
+    <string name="release_date">Estreno:</string>
+    <string name="removed_from_favourites">Pelicula eliminada de Favoritos</string>
+    <string name="saved_to_favourites">Pelicula guardada en Favoritos</string>
+    <string name="see_favourite_movies">Ver Peliculas Favoritas</string>
+    <string name="user_rating">Puntuacion:</string>
+    <string name="watch_trailer">Ver Trailer</string>
+</resources>

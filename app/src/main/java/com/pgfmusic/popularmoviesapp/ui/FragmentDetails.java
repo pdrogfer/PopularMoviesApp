@@ -90,10 +90,12 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
         iv_backdrop.setAdjustViewBounds(true);
         Picasso.with(getContext())
                 .load(tempMovie.getBackdrop())
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.placeholder)
                 .into(iv_backdrop);
         tv_titleOriginal.setText(tempMovie.getOriginalTitle());
-        tv_releaseDate.setText("Release: " + tempMovie.getReleaseDate());
-        tv_userRating.setText("Rating: " + String.valueOf(tempMovie.getUserRating()));
+        tv_releaseDate.setText(getString(R.string.release_date) + " " + tempMovie.getReleaseDate());
+        tv_userRating.setText(getString(R.string.user_rating)+  " " + String.valueOf(tempMovie.getUserRating()));
         tv_synopsis.setText(tempMovie.getPlotSynopsis());
 
         getTrailers(tempMovie.getId());
@@ -218,7 +220,7 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
                     // and call tempMovie.setIsFavourite(0);
                     boolean result = deleteMovie(db, tempMovie);
                     if (result) {
-                        Toast.makeText(getContext(), "Movie removed from Favourites list", Toast.LENGTH_LONG)
+                        Toast.makeText(getContext(), getString(R.string.removed_from_favourites), Toast.LENGTH_LONG)
                                 .show();
                         tempMovie.setIsFavourite(0);
                     }
@@ -239,7 +241,7 @@ public class FragmentDetails extends Fragment implements View.OnClickListener{
                         newMovieValues.put(Utils.MOVIE_IS_FAVOURITE, tempMovie.getIsFavourite());
                         Long i = db.insert(Utils.DB_MOVIES_TABLE_NAME, null, newMovieValues);
                         if (i > 0) {
-                            Toast.makeText(getActivity(), "Movie saved in Favourites", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), getString(R.string.saved_to_favourites), Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
